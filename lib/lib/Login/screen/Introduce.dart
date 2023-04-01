@@ -21,35 +21,35 @@ class _MyLoginState extends State<MyLogin> {
           return Scaffold(
             body: Container(
               color: Colors.white,
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ListTile(
+                  const ListTile(
                     trailing: Text(
                       "Skip",
-                      style: TextStyle(color: Colors.blue, fontSize: 20),
+                      style: TextStyle(color: Colors.blue,),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Image(image: AssetImage('assets/logo.jpg')),
-                  SizedBox(
+                  const Image(image: AssetImage('assets/logo.jpg')),
+                  const SizedBox(
                     height: 20,
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       "Your Convenience in making a todo List",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       "Here's a mobile platform that hepls you create task or to list so that it can help you in every job easier and faster.",
                       style: TextStyle(
@@ -57,7 +57,7 @@ class _MyLoginState extends State<MyLogin> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 70,
                   ),
                   TextButton(
@@ -65,16 +65,16 @@ class _MyLoginState extends State<MyLogin> {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => BlocProvider(
                                   create: (context) => LoginBloc(),
-                                  child: Welcome(),
+                                  child: const Welcome(),
                                 )));
                       },
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(120, 15, 120, 15),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.fromLTRB(120, 15, 120, 15),
+                        decoration: const BoxDecoration(
                             color: Colors.blueAccent,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
-                        child: Text(
+                        child: const Text(
                           'Continue',
                           style: TextStyle(color: Colors.white),
                         ),

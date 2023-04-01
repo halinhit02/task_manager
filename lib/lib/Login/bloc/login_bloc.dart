@@ -9,7 +9,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _onCheckEmailAddress(CheckEmailAddressEvent event, Emitter emit) async {
-    if (event.emailAddress.length > 0) {
+    if (event.emailAddress.isNotEmpty) {
       event.isCheckEmailAddress = true;
     }
     emit(event.isCheckEmailAddress);

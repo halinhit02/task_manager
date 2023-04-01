@@ -29,82 +29,80 @@ class _MyEmailAddressState extends State<MyEmailAddress> {
             checkEmailAddress = state.checkEmailAddress;
           }
           return Scaffold(
-            body: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 100,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 100,
+                ),
+                const Center(
+                  child: Text(
+                    "Welcome Back!",
+                    style:
+                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
-                  Center(
-                    child: Text(
-                      "Welcome Back!",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Center(
+                  child: Text(
+                    'Your work faster and structured with Task Manager',
+                    style: TextStyle(color: Colors.grey),
                   ),
-                  SizedBox(
-                    height: 10,
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 20),
+                  child: const Text(
+                    "Email Address",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
-                  Center(
-                    child: Text(
-                      'Your work faster and structured with Todyapp',
-                      style: TextStyle(color: Colors.grey),
-                    ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    onChanged: (value) {
+                      alo = value;
+                      // context.read<LoginBloc>().add(
+                      //     CheckEmailAddressEvent(checkEmailAddress, value));
+                      setState(() {
+                        if (value.isNotEmpty) {
+                          checkEmailAddress = true;
+                        }
+                      });
+                    },
+                    decoration: const InputDecoration(
+                        labelText: 'name@example.com',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        )),
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 20),
-                    child: Text(
-                      "Email Address",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: TextField(
-                      onChanged: (value) {
-                        alo = value;
-                        // context.read<LoginBloc>().add(
-                        //     CheckEmailAddressEvent(checkEmailAddress, value));
-                        setState(() {
-                          if (value.length > 0) {
-                            checkEmailAddress = true;
-                          }
-                        });
-                      },
-                      decoration: InputDecoration(
-                          labelText: 'name@example.com',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          )),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            bottomSheet: Container(
-              padding: EdgeInsets.only(bottom: 20, left: 18),
+            bottomSheet: Padding(
+              padding: const EdgeInsets.only(bottom: 20, left: 18),
               child: TextButton(
                   onPressed: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => CreateAccount()));
+                        MaterialPageRoute(builder: (_) => const CreateAccount()));
                   },
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(160, 15, 160, 15),
+                    padding: const EdgeInsets.fromLTRB(160, 15, 160, 15),
                     decoration: BoxDecoration(
                         color:
                             checkEmailAddress ? Colors.blueAccent : Colors.grey,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Text(
+                        borderRadius: const BorderRadius.all(Radius.circular(10))),
+                    child: const Text(
                       'Next',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      style: TextStyle(color: Colors.white,),
                     ),
                   )),
             ),
