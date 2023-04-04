@@ -5,14 +5,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/login_bloc.dart';
 import 'ScreenWelcome.dart';
 
-class MyLogin extends StatefulWidget {
+class MyLogin extends StatelessWidget {
   const MyLogin({Key? key}) : super(key: key);
 
   @override
-  State<MyLogin> createState() => _MyLoginState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LoginBloc(),
+      child: const _Body(),
+    );
+  }
 }
 
-class _MyLoginState extends State<MyLogin> {
+class _Body extends StatefulWidget {
+  const _Body({Key? key}) : super(key: key);
+
+  @override
+  State<_Body> createState() => __BodyState();
+}
+
+class __BodyState extends State<_Body> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(

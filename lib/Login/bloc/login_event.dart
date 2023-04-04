@@ -5,6 +5,6 @@ class LoginEvent {
 }
 
 class CheckEmailAddressEvent extends LoginEvent {
-  bool isCheckEmailAddress;
-  CheckEmailAddressEvent(this.isCheckEmailAddress);
+  final String emailAddress;
+  CheckEmailAddressEvent(this.emailAddress);
 }

@@ -5,15 +5,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/login_bloc.dart';
 import 'ScreenCreateAccount.dart';
 
-class MyEmailAddress extends StatefulWidget {
+class MyEmailAddress extends StatelessWidget {
   const MyEmailAddress({Key? key}) : super(key: key);
 
   @override
-  State<MyEmailAddress> createState() => _MyEmailAddressState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => LoginBloc(),
+      child: const _Body(),
+    );
+  }
 }
 
-class _MyEmailAddressState extends State<MyEmailAddress> {
-  // bool checkEmailAddress = false;
+class _Body extends StatefulWidget {
+  const _Body({Key? key}) : super(key: key);
+
+  @override
+  State<_Body> createState() => __BodyState();
+}
+
+class __BodyState extends State<_Body> {
+  bool checkEmailAddress = false;
   // TextEditingController _controller = TextEditingController();
 
   @override
@@ -27,7 +39,7 @@ class _MyEmailAddressState extends State<MyEmailAddress> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is CheckEmailAddressState) {
-          //checkEmailAddress = state.checkEmailAddress;
+          checkEmailAddress = state.checkEmailAddress;
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -75,9 +87,9 @@ class _MyEmailAddressState extends State<MyEmailAddress> {
                     child: TextField(
                       //controller: _controller,
                       onChanged: (value) {
-                        // context
-                        //     .read<LoginBloc>()
-                        //     .add(CheckEmailAddressEvent(checkEmailAddress));
+                        context
+                            .read<LoginBloc>()
+                            .add(CheckEmailAddressEvent(value));
                       },
                       decoration: InputDecoration(
                           labelText: 'name@example.com',
@@ -93,13 +105,16 @@ class _MyEmailAddressState extends State<MyEmailAddress> {
               padding: EdgeInsets.only(bottom: 20, left: 18),
               child: TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => CreateAccount()));
+                    if (checkEmailAddress) {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => CreateAccount()));
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.fromLTRB(160, 15, 160, 15),
                     decoration: BoxDecoration(
-                        color: Colors.blueAccent,
+                        color:
+                            checkEmailAddress ? Colors.blueAccent : Colors.grey,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Text(
                       'Next',
