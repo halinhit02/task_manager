@@ -101,7 +101,7 @@ class __BodyState extends State<_Body> {
                 ],
               ),
             ),
-            bottomSheet: Container(
+            bottomNavigationBar: Container(
               padding: EdgeInsets.only(bottom: 20, left: 18),
               child: TextButton(
                   onPressed: () {

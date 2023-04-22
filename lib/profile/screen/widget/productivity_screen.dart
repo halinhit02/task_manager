@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +16,7 @@ class _MyProductivityState extends State<MyProductivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
@@ -24,7 +27,8 @@ class _MyProductivityState extends State<MyProductivity> {
             color: Colors.black,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white.withAlpha(200),
+        elevation: 0,
         title: Text(
           'Productivity',
           style: TextStyle(color: Colors.black),
@@ -33,7 +37,7 @@ class _MyProductivityState extends State<MyProductivity> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(top: 110, left: 8, right: 8),
           child: Column(
             children: [
               Center(

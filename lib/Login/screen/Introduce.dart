@@ -39,9 +39,18 @@ class __BodyState extends State<_Body> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ListTile(
-                    trailing: Text(
-                      "Skip",
-                      style: TextStyle(color: Colors.blue, fontSize: 20),
+                    trailing: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => BlocProvider(
+                                  create: (context) => LoginBloc(),
+                                  child: Welcome(),
+                                )));
+                      },
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(color: Colors.blue, fontSize: 20),
+                      ),
                     ),
                   ),
                   SizedBox(

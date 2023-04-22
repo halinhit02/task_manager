@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'Login/bloc/login_bloc.dart';
 import 'Login/screen/Introduce.dart';
+import 'home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         title: 'Task Manager',
         home: BlocProvider(
           create: (context) => LoginBloc(),
-          child: const MyLogin(),
+          child: const MyHome(),
         ));
   }
 }
