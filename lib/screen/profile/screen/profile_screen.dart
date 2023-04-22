@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thuc_tap_chuyen_nganh/profile/screen/widget/edit_profile.dart';
-import 'package:thuc_tap_chuyen_nganh/profile/screen/widget/help_center.dart';
-import 'package:thuc_tap_chuyen_nganh/profile/screen/widget/productivity_screen.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/edit_profile.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/help_center.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/productivity_screen.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);

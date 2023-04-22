@@ -13,7 +13,7 @@ class MyMenuFilter extends StatefulWidget {
 class _MyMenuFilterState extends State<MyMenuFilter> {
   late DateTime selectedDay;
 
-  void _hanleData(date) {
+  void _handleData(date) {
     setState(() {
       selectedDay = date;
     });
@@ -61,7 +61,7 @@ class _MyMenuFilterState extends State<MyMenuFilter> {
             bottomBarColor: Colors.deepOrange,
             onRangeSelected: (range) {},
             onDateSelected: (date) {
-              return _hanleData(date);
+              return _handleData(date);
             },
             events: events,
             isExpanded: true,

@@ -1,4 +1,4 @@
-part of "menu_homepage_bloc.dart";
+part of 'menu_homepage_bloc.dart';
 
 class MenuHomepageState {
   const MenuHomepageState();

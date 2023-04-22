@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/login_bloc.dart';
-import 'ScreenEmailAddress.dart';
+import 'email_address_screen.dart';
 
-class Welcome extends StatefulWidget {
-  const Welcome({Key? key}) : super(key: key);
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<Welcome> createState() => _WelcomeState();
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomeState extends State<Welcome> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
@@ -34,7 +34,7 @@ class _WelcomeState extends State<Welcome> {
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Todyapp',
+                        'TaskManager',
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class _WelcomeState extends State<Welcome> {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => BlocProvider(
                                   create: (context) => LoginBloc(),
-                                  child: MyEmailAddress(),
+                                  child: EmailAddressScreen(),
                                 )));
                       },
                       child: Container(

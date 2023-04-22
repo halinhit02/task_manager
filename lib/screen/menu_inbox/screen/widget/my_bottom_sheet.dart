@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'dialog_widget.dart';
 
-class BottomSheep extends StatefulWidget {
-  const BottomSheep({Key? key}) : super(key: key);
+class MyBottomSheet extends StatefulWidget {
+  const MyBottomSheet({Key? key}) : super(key: key);
 
   @override
-  State<BottomSheep> createState() => _BottomSheepState();
+  State<MyBottomSheet> createState() => _MyBottomSheetState();
 }
 
-class _BottomSheepState extends State<BottomSheep> {
+class _MyBottomSheetState extends State<MyBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(

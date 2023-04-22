@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/login_bloc.dart';
-import 'ScreenWelcome.dart';
+import 'welcome_screen.dart';
 
-class MyLogin extends StatelessWidget {
-  const MyLogin({Key? key}) : super(key: key);
+class IntroduceScreen extends StatelessWidget {
+  const IntroduceScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class __BodyState extends State<_Body> {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => BlocProvider(
                                   create: (context) => LoginBloc(),
-                                  child: Welcome(),
+                                  child: WelcomeScreen(),
                                 )));
                       },
                       child: Text(
@@ -86,11 +86,12 @@ class __BodyState extends State<_Body> {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => BlocProvider(
                                   create: (context) => LoginBloc(),
-                                  child: Welcome(),
+                                  child: WelcomeScreen(),
                                 )));
                       },
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(120, 15, 120, 15),
+                        width: double.maxFinite,
+                        padding: EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
                             color: Colors.blueAccent,
                             borderRadius:

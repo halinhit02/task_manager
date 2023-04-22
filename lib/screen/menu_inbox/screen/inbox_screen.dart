@@ -1,15 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:thuc_tap_chuyen_nganh/MenuInbox/screen/widget/bottom_sheep.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/menu_inbox/screen/widget/my_bottom_sheet.dart';
 
-class MyInboxScreen extends StatefulWidget {
-  const MyInboxScreen({Key? key}) : super(key: key);
+class MenuInboxScreen extends StatefulWidget {
+  const MenuInboxScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyInboxScreen> createState() => _MyInboxScreenState();
+  State<MenuInboxScreen> createState() => _MenuInboxScreenState();
 }
 
-class _MyInboxScreenState extends State<MyInboxScreen> {
+class _MenuInboxScreenState extends State<MenuInboxScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -223,7 +222,7 @@ class _MyInboxScreenState extends State<MyInboxScreen> {
         context: context,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return BottomSheep();
+          return const MyBottomSheet();
         });
   }
 }
