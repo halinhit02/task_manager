@@ -13,148 +13,154 @@ class MyBottomSheet extends StatefulWidget {
 class _MyBottomSheetState extends State<MyBottomSheet> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 50,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Detail Task',
-                style: TextStyle(fontSize: 20),
-              ),
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: Icon(Icons.close))
-            ],
-          ),
-          Row(
-            children: [
-              Icon(
-                Icons.ac_unit,
-                color: Colors.blue,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                'Masyla Website Project',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 30, right: 30),
-            child: Text(
-              'One of the website project in the field of digital services, located in california',
-              style: TextStyle(color: Colors.grey),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 40,
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 30),
-            child: Row(
+            Row(
               children: [
-                Icon(Icons.timer_sharp, color: Colors.red, size: 18),
-                const SizedBox(width: 10),
-                Text(
-                  '08:30 PM',
-                  style: TextStyle(color: Colors.red, fontSize: 18),
-                )
+                const Expanded(
+                  child: Text(
+                    'Detail Task',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.close))
               ],
             ),
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 25),
-            child: Row(
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.message_outlined,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(
-                        Icons.account_balance_wallet,
-                        color: Colors.grey,
-                      ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.access_alarm_sharp,
-                              color: Colors.grey)),
-                      Icon(
-                        Icons.access_time_filled,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Icon(
-                        Icons.flag,
-                        color: Colors.grey,
-                      )
-                    ],
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: const BoxDecoration(
+                      border: Border.fromBorderSide(BorderSide(
+                        width: 2,
+                        color: Colors.teal,
+                      )),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(35),
+                      )),
+                  child: const Icon(
+                    Icons.circle_rounded,
+                    color: Colors.teal,
+                    size: 8,
                   ),
                 ),
                 const SizedBox(
-                  width: 130,
+                  width: 15,
                 ),
-                Padding(
-                    padding: EdgeInsets.all(10),
-                    child: InkWell(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.density_medium_outlined,
-                        color: Colors.grey,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Masyla Website Project',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'One of the website project in the field of digital services, located in california',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.timer_sharp, color: Colors.red, size: 18),
+                          const SizedBox(width: 10),
+                          Text(
+                            '08:30 PM',
+                            style: TextStyle(color: Colors.red, fontSize: 16),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 10,),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.message_outlined,
+                            color: Colors.grey,
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.access_alarm_sharp,
+                                  color: Colors.grey)),
+                          Icon(
+                            Icons.flag,
+                            color: Colors.grey,
+                          ),
+                          const Expanded(child: const SizedBox()),
+                          InkWell(
+                            onTap: () {},
+                            child: Icon(
+                              Icons.menu_rounded,
+                              color: Colors.grey,
+                              size: 20,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Divider(
+              thickness: 1,
+            ),
+            TextField(
+              autofocus: true,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 15),
+                hintText: 'Tyiping ......',
+                border: OutlineInputBorder(borderSide: BorderSide.none),
+              ),
+            ),
+            Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      _showDialogTimeWorkDetail();
+                    },
+                    icon: const Icon(
+                      Icons.link,
+                    )),
+                const Expanded(child: SizedBox()),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.send,
+                      color: Colors.blue,
+                      size: 20,
                     ))
               ],
             ),
-          ),
-          Divider(
-            thickness: 1,
-            endIndent: 20,
-            indent: 20,
-          ),
-          TextField(
-            maxLines: 3,
-            autofocus: true,
-            decoration: InputDecoration(
-              hintText: 'Tyiping ......',
+            Divider(
+              thickness: 1,
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    _showDialogTimeWorkDetail();
-                  },
-                  icon: Icon(
-                    Icons.link,
-                  )),
-              IconButton(
-                  onPressed: () {}, icon: Icon(Icons.send, color: Colors.blue))
-            ],
-          ),
-          Divider(
-            thickness: 1,
-            endIndent: 20,
-            indent: 20,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

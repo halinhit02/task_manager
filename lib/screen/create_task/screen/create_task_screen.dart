@@ -175,82 +175,60 @@ class _BodyState extends State<Body> {
         context: context,
         builder: (BuildContext context) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextField(
-                        autofocus: true,
-                        decoration: InputDecoration(
-                          hintText: 'Eg: Metting with client.',
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                        ),
-                      ),
-                      TextField(
-                        autofocus: true,
-                        decoration: InputDecoration(
-                          hintText: 'Description',
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    hintText: 'Eg: Metting with client.',
+                    contentPadding: EdgeInsets.zero,
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                  ),
+                ),
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    hintText: 'Description',
+                    contentPadding: EdgeInsets.zero,
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
                         children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.account_balance_wallet,
-                                    color: Colors.grey,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {
-                                        _showBottomSheep1();
-                                      },
-                                      icon: Icon(Icons.access_alarm_sharp,
-                                          color: Colors.grey)),
-                                  Icon(
-                                    Icons.access_time_filled,
-                                    color: Colors.grey,
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Icon(
-                                    Icons.flag,
-                                    color: Colors.grey,
-                                  )
-                                ],
-                              ),
-                            ),
+                          Icon(
+                            Icons.account_balance_wallet,
+                            color: Colors.grey,
                           ),
-                          Padding(
-                              padding: EdgeInsets.all(5),
-                              child: InkWell(
-                                onTap: () {},
-                                child: Icon(
-                                  Icons.send,
-                                  color: Colors.blue,
-                                ),
-                              ))
+                          IconButton(
+                              onPressed: () {
+                                _showBottomSheep1();
+                              },
+                              icon: Icon(Icons.access_time_filled,
+                                  color: Colors.grey)),
+                          Icon(
+                            Icons.flag,
+                            color: Colors.grey,
+                          )
                         ],
                       ),
-                      Divider(
-                        thickness: 1,
-                        endIndent: 10,
-                        indent: 10,
-                      )
-                    ],
-                  ),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: InkWell(
+                          onTap: () {},
+                          child: const Icon(
+                            Icons.send,
+                            color: Colors.blue,
+                          ),
+                        ))
+                  ],
+                ),
+                const Divider(
+                  thickness: 1,
                 ),
               ],
             ),
@@ -264,98 +242,99 @@ class _BodyState extends State<Body> {
         isScrollControlled: true,
         builder: (BuildContext context) {
           TimeOfDay time = const TimeOfDay(hour: 07, minute: 00);
-          return Padding(
-            padding: const EdgeInsets.only(top: 50),
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      topLeft: Radius.circular(10))),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
+          return SafeArea(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                ListTile(
+                  leading: Icon(Icons.sunny),
+                  title: Text(
+                    'Today',
+                    style: TextStyle(color: Colors.black),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.sunny),
-                    title: Text(
-                      'Today',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    trailing: Text('4 Apr 2022'),
+                  trailing: Text('4 Apr 2022'),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                ),
+                ListTile(
+                  leading: Icon(Icons.cloud_outlined),
+                  title: Text(
+                    'Tomorrow',
+                    style: TextStyle(color: Colors.black),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.cloud_outlined),
-                    title: Text(
-                      'Tomorrow',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    trailing: Text('Sat'),
+                  trailing: Text('Sat'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.time_to_leave_outlined),
+                  title: Text(
+                    'Time',
+                    style: TextStyle(color: Colors.black),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.time_to_leave_outlined),
-                    title: Text(
-                      'Time',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    trailing: Text('8:20'),
-                  ),
-                  Divider(
-                    thickness: 1,
-                    indent: 20,
-                    endIndent: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Future<TimeOfDay?> newTime = showTimePicker(
-                              context: context, initialTime: time);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(15),
-                          color: Colors.grey[300],
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.add,
-                                color: Colors.teal,
-                              ),
-                              Text(
-                                'Add Time',
-                                style: TextStyle(color: Colors.teal),
-                              )
-                            ],
-                          ),
-                        ),
+                  trailing: Text('8:20'),
+                ),
+                Divider(
+                  thickness: 1,
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    MaterialButton(
+                      onPressed: () {
+                        Future<TimeOfDay?> newTime =
+                            showTimePicker(context: context, initialTime: time);
+                      },
+                      color: Colors.grey[300],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Container(
-                          padding: EdgeInsets.all(15),
-                          // decoration: BoxDecoration(
-                          //     borderRadius:
-                          //         BorderRadius.all(Radius.circular(10))),
-                          color: Colors.teal,
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.timer_sharp,
-                                color: Colors.white,
-                              ),
-                              Text(
-                                'Reschedule',
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Theme.of(context).primaryColor,
+                            size: 18,
                           ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Add Time',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {},
+                      color: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.timer_sharp,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Reschedule',
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                )
+              ],
             ),
           );
         });

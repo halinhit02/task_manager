@@ -15,68 +15,53 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
-        leading: InkWell(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: Colors.black,
-          ),
-        ),
-        title: Text(
+        title: const Text(
           'Profile',
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
-        actions: [
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Icon(
-              Icons.search,
-              color: Colors.black,
-            ),
-          )
-        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: ColoredBox(
+        color: Colors.white,
         child: Column(
           children: [
+            const SizedBox(
+              height: 15,
+            ),
             Center(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(300),
-                child: Image(
-                    fit: BoxFit.cover,
-                    width: 150,
-                    height: 150,
-                    image: AssetImage('assets/anh_phuong.jpg')),
+                borderRadius: BorderRadius.circular(50),
+                child: Image.asset(
+                  'assets/anh_phuong.jpg',
+                  width: 84,
+                  height: 84,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(
               height: 10,
             ),
-            Center(
-              child: Text(
-                'Phạm Thị Thu Phương',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-            ),
-            Center(
-              child: Text(
-                'PhuongNguNgoc123@gmail.com',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey),
-              ),
+            Text(
+              'Phạm Thị Thu Phương',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
             const SizedBox(
-              height: 10,
+              height: 3,
+            ),
+            Text(
+              'PhuongNguNgoc123@gmail.com',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(
+              height: 15,
             ),
             RowDescription(
               icon: Icons.person,
@@ -108,10 +93,10 @@ class _MyProfileState extends State<MyProfile> {
               subIcon: Icons.navigate_next,
               onTap: () {},
             ),
-            Divider(
+            const Divider(
               thickness: 1,
-              endIndent: 8,
-              indent: 8,
+              endIndent: 15,
+              indent: 15,
             ),
             const SizedBox(
               height: 5,
@@ -141,7 +126,9 @@ class _MyProfileState extends State<MyProfile> {
               icon: Icons.logout,
               title: 'Log Out',
               subIcon: Icons.navigate_next,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pop();
+              },
             ),
           ],
         ),
@@ -155,6 +142,7 @@ class RowDescription extends StatelessWidget {
   final String title;
   final IconData subIcon;
   final Function() onTap;
+
   const RowDescription(
       {Key? key,
       required this.icon,
@@ -162,18 +150,34 @@ class RowDescription extends StatelessWidget {
       required this.subIcon,
       required this.onTap})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => onTap(),
-      child: ListTile(
-        leading: Icon(icon, size: 25),
-        title: Text(
-          '$title',
-          style: TextStyle(fontSize: 20),
-        ),
-        trailing: Icon(subIcon),
-      ),
-    );
+    return InkWell(
+        onTap: () => onTap(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                size: 22,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              Icon(subIcon, size: 16,),
+            ],
+          ),
+        ));
   }
 }

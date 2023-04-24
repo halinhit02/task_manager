@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/login/screen/create_account_screen.dart';
 
+import '../../home/home_screen.dart';
 import '../bloc/login_bloc.dart';
 
 class EmailAddressScreen extends StatelessWidget {
@@ -25,6 +26,7 @@ class _Body extends StatefulWidget {
 
 class __BodyState extends State<_Body> {
   bool checkEmailAddress = false;
+
   // TextEditingController _controller = TextEditingController();
 
   @override
@@ -45,80 +47,88 @@ class __BodyState extends State<_Body> {
         builder: (context, state) {
           return Scaffold(
             body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 100,
-                ),
-                Center(
-                  child: Text(
-                    "Welcome Back!",
-                    style:
-                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      Center(
+                        child: Text(
+                          "Welcome Back!",
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                        child: Text(
+                          'Your work faster and structured with Todyapp',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Email Address",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: TextField(
+                          //controller: _controller,
+                          onChanged: (value) {
+                            context
+                                .read<LoginBloc>()
+                                .add(CheckEmailAddressEvent(value));
+                          },
+                          decoration: InputDecoration(
+                              labelText: 'name@example.com',
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              )),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Text(
-                    'Your work faster and structured with Todyapp',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 20),
-                  child: Text(
-                    "Email Address",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: TextField(
-                    //controller: _controller,
-                    onChanged: (value) {
-                      context
-                          .read<LoginBloc>()
-                          .add(CheckEmailAddressEvent(value));
+                TextButton(
+                    onPressed: () {
+                      if (checkEmailAddress) {
+
+                      }
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (_) => const HomeScreen()));
                     },
-                    decoration: InputDecoration(
-                        labelText: 'name@example.com',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        )),
-                  ),
-                ),
+                    child: Container(
+                      width: double.maxFinite,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: checkEmailAddress
+                              ? Theme.of(context).primaryColor
+                              : Colors.grey,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
+                      child: const Text(
+                        'Next',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    )),
               ],
-            ),
-            bottomNavigationBar: Container(
-              padding: EdgeInsets.only(bottom: 20, left: 18),
-              child: TextButton(
-                  onPressed: () {
-                    if (checkEmailAddress) {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => CreateAccountScreen()));
-                    }
-                  },
-                  child: Container(
-                    width: double.maxFinite,
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                    decoration: BoxDecoration(
-                        color:
-                            checkEmailAddress ? Colors.blueAccent : Colors.grey,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Text(
-                      'Next',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  )),
             ),
           );
         },

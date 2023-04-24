@@ -83,15 +83,15 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           TextButton(
               onPressed: () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => HomeScreen()));
+                    .pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
               },
               child: Container(
                 width: double.maxFinite,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                    color: Colors.blueAccent,
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                 child: const Text(
                   'Sign Up',
                   style: TextStyle(color: Colors.white, fontSize: 18),
