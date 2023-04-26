@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:thuc_tap_chuyen_nganh/utils/app_constants.dart';
 
 import '../bloc/login_bloc.dart';
 import 'create_account_screen.dart';
@@ -35,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'TaskManager',
+                        AppConstants.APPNAME,
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -47,7 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Image(image: AssetImage('assets/logo.jpg')),
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: const Image(image: AssetImage('assets/logo.jpg'))),
                   const SizedBox(
                     height: 20,
                   ),
@@ -73,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 15,
                         ),
                         Text(
-                          'Sign in with email',
+                          'Sign in',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         )
                       ],
@@ -83,11 +86,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 15,
                   ),
                   MaterialButton(
-                    color: Theme.of(context).primaryColor,
                     elevation: 1,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                          color: Theme.of(context).primaryColor, width: 2),
                     ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -98,17 +102,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.email,
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         Text(
-                          'Sign up with email',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          'Sign up',
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 16),
                         )
                       ],
                     ),
@@ -142,22 +148,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 20,
                   ),
                   MaterialButton(
-                    color: Colors.white70,
                     elevation: 1,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: Theme.of(context).primaryColor),
                     ),
                     onPressed: () {},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset('assets/ic_google.png', width: 25),
+                        Image.asset('assets/ic_google.png', width: 22),
                         const SizedBox(
                           width: 15,
                         ),
                         const Text(
-                          'Google',
+                          'Sign in with Google',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,

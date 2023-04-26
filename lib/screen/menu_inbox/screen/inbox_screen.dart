@@ -25,16 +25,9 @@ class _MenuInboxScreenState extends State<MenuInboxScreen> {
       ),
       body: ListView.builder(
         itemCount: 10,
-        itemBuilder: (_, index) => ItemTask(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showBottomSheep();
-        },
-        backgroundColor: Colors.teal,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
+        itemBuilder: (_, index) => InkWell(
+          onTap: () => _showBottomSheep(),
+          child: ItemTask(),
         ),
       ),
     );

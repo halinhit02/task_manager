@@ -58,93 +58,102 @@ class _BodyState extends State<Body> {
                   const SizedBox(
                     height: 5,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
-                    ),
-                    child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                color: Colors.teal,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                ),
+                  InkWell(
+                    onTap: () => showCreateTaskSheet(),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 20),
-                              child: Row(
+                              child: Column(
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.all(5),
+                                    height: 40,
                                     decoration: const BoxDecoration(
-                                        color: Colors.teal,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(8),
-                                        )),
-                                    child: const Icon(
-                                      Icons.add,
-                                      color: Colors.white,
-                                      size: 18,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'Masyla Website Project',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                                      color: Colors.teal,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              thickness: 0.6,
-                              height: 2,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Text(
-                                    'Add your task',
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      'Today, Mon 20 Jul 2022',
-                                      style: TextStyle(color: Colors.black54),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 20),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(5),
+                                          decoration: const BoxDecoration(
+                                              color: Colors.teal,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(8),
+                                              )),
+                                          child: const Icon(
+                                            Icons.add,
+                                            color: Colors.white,
+                                            size: 18,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            'Tap plus to create a new task',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            )
-                          ],
-                        )),
+                                  Divider(
+                                    thickness: 0.6,
+                                    height: 2,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Text(
+                                          'Add your task',
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            'Today, Mon 20 Jul 2022',
+                                            style: TextStyle(
+                                                color: Colors.black54),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ),
+                      ],
+                    ),
                   ),
                   Expanded(
                       child: ListView.builder(
@@ -156,7 +165,7 @@ class _BodyState extends State<Body> {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                showBottomSheet();
+                showCreateTaskSheet();
               },
               backgroundColor: Colors.teal,
               child: const Icon(
@@ -170,7 +179,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  void showBottomSheet() {
+  void showCreateTaskSheet() {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -205,7 +214,7 @@ class _BodyState extends State<Body> {
                           ),
                           IconButton(
                               onPressed: () {
-                                _showBottomSheep1();
+                                _showDateTimeSheet();
                               },
                               icon: Icon(Icons.access_time_filled,
                                   color: Colors.grey)),
@@ -236,7 +245,7 @@ class _BodyState extends State<Body> {
         });
   }
 
-  void _showBottomSheep1() {
+  void _showDateTimeSheet() {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,

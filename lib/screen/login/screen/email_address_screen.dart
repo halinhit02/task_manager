@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/login/screen/create_account_screen.dart';
+import 'package:thuc_tap_chuyen_nganh/utils/app_constants.dart';
 
 import '../../home/home_screen.dart';
 import '../bloc/login_bloc.dart';
@@ -46,89 +46,91 @@ class __BodyState extends State<_Body> {
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
           return Scaffold(
-            body: Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 100,
-                      ),
-                      Center(
-                        child: Text(
-                          "Welcome Back!",
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+            body: SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 60,
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Center(
-                        child: Text(
-                          'Your work faster and structured with Todyapp',
-                          style: TextStyle(color: Colors.grey),
+                        Center(
+                          child: Text(
+                            "Welcome Back!",
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 20),
-                        child: Text(
-                          "Email Address",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15),
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: TextField(
-                          //controller: _controller,
-                          onChanged: (value) {
-                            context
-                                .read<LoginBloc>()
-                                .add(CheckEmailAddressEvent(value));
-                          },
-                          decoration: InputDecoration(
-                              labelText: 'name@example.com',
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              )),
+                        Center(
+                          child: Text(
+                            'Your work faster and structured with ${AppConstants.APPNAME}',
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 20),
+                          child: Text(
+                            "Email Address",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: TextField(
+                            onChanged: (value) {
+                              context
+                                  .read<LoginBloc>()
+                                  .add(CheckEmailAddressEvent(value));
+                            },
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                labelText: 'name@example.com',
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {
-                      if (checkEmailAddress) {
+                  TextButton(
+                      onPressed: () {
+                        if (checkEmailAddress) {
 
-                      }
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (_) => const HomeScreen()));
-                    },
-                    child: Container(
-                      width: double.maxFinite,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: checkEmailAddress
-                              ? Theme.of(context).primaryColor
-                              : Colors.grey,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10))),
-                      child: const Text(
-                        'Next',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    )),
-              ],
+                        }
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (_) => const HomeScreen()));
+                      },
+                      child: Container(
+                        width: double.maxFinite,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: checkEmailAddress
+                                ? Theme.of(context).primaryColor
+                                : Colors.grey,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10))),
+                        child: const Text(
+                          'Next',
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      )),
+                ],
+              ),
             ),
           );
         },

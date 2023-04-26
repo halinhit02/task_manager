@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/edit_profile.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/help_center.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/productivity_screen.dart';
 
 class MyProfile extends StatefulWidget {
@@ -28,13 +27,13 @@ class _MyProfileState extends State<MyProfile> {
         child: Column(
           children: [
             const SizedBox(
-              height: 15,
+              height: 10,
             ),
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  'assets/anh_phuong.jpg',
+                child: Image.network(
+                  'https://i.pravatar.cc/84',
                   width: 84,
                   height: 84,
                   fit: BoxFit.cover,
@@ -45,7 +44,7 @@ class _MyProfileState extends State<MyProfile> {
               height: 10,
             ),
             Text(
-              'Phạm Thị Thu Phương',
+              'Hà Linh',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 17,
@@ -53,10 +52,10 @@ class _MyProfileState extends State<MyProfile> {
                   color: Colors.black),
             ),
             const SizedBox(
-              height: 3,
+              height: 5,
             ),
             Text(
-              'PhuongNguNgoc123@gmail.com',
+              'admin@halinhit.com',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey),
             ),
@@ -114,10 +113,7 @@ class _MyProfileState extends State<MyProfile> {
               icon: Icons.help_center_outlined,
               title: 'Help Center',
               subIcon: Icons.navigate_next,
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => HelpCenterScreen()));
-              },
+              onTap: () {},
             ),
             const SizedBox(
               height: 5,
@@ -175,7 +171,10 @@ class RowDescription extends StatelessWidget {
                   ),
                 ),
               ),
-              Icon(subIcon, size: 16,),
+              Icon(
+                subIcon,
+                size: 16,
+              ),
             ],
           ),
         ));
