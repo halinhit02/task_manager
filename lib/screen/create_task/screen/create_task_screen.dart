@@ -121,31 +121,19 @@ class _BodyState extends State<Body> {
                                     height: 2,
                                   ),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.all(10),
-                                        child: Text(
-                                          'Add your task',
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
-                                      ),
                                       Expanded(
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(10),
                                           child: Text(
-                                            'Today, Mon 20 Jul 2022',
-                                            style: TextStyle(
-                                                color: Colors.black54),
+                                            'Add your task',
+                                            style:
+                                                TextStyle(color: Colors.grey),
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
                                       ),
                                     ],
                                   )

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:thuc_tap_chuyen_nganh/utils/app_constants.dart';
 
+import '../../../repository/auth_repos.dart';
 import '../../home/home_screen.dart';
 
 class CreateAccountScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     child: Text(
                       "Welcome Back!",
                       style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                   ),
                   SizedBox(
@@ -47,7 +48,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   Padding(
                     padding: EdgeInsets.only(left: 15),
                     child: Text(
-                      "Username",
+                      "Email",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
@@ -56,7 +57,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     padding: EdgeInsets.all(10),
                     child: TextField(
                       decoration: InputDecoration(
-                          labelText: 'Enter your username',
+                          labelText: 'Enter your email',
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 10,
                             vertical: 10,
@@ -92,8 +93,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => const HomeScreen()));
+                  AuthRepos()
+                      .signInWithEmailPassword('email@gmail.com', 'password')
+                      .then((value) => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (_) => const HomeScreen())));
+
                 },
                 child: Container(
                   width: double.maxFinite,
@@ -104,7 +108,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(10))),
                   child: const Text(
-                    'Sign Up',
+                    'Sign In',
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 )),

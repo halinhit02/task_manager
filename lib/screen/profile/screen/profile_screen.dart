@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/login/bloc/login_bloc.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/login/screen/login_screen.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/edit_profile.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/productivity_screen.dart';
 
@@ -123,7 +126,10 @@ class _MyProfileState extends State<MyProfile> {
               title: 'Log Out',
               subIcon: Icons.navigate_next,
               onTap: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (_) => BlocProvider(
+                        create: (context) => LoginBloc(),
+                        child: const LoginScreen())));
               },
             ),
           ],

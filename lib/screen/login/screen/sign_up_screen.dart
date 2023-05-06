@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thuc_tap_chuyen_nganh/utils/app_constants.dart';
 
+import '../../../repository/auth_repos.dart';
 import '../../home/home_screen.dart';
 import '../bloc/login_bloc.dart';
 
@@ -58,9 +59,9 @@ class __BodyState extends State<_Body> {
                         ),
                         Center(
                           child: Text(
-                            "Welcome Back!",
+                            "Create New Account",
                             style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold),
+                                fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                         ),
                         SizedBox(
@@ -75,32 +76,77 @@ class __BodyState extends State<_Body> {
                         SizedBox(
                           height: 40,
                         ),
-                        Container(
-                          margin: EdgeInsets.only(left: 20),
+                        Padding(
+                          padding: EdgeInsets.only(left: 15),
                           child: Text(
-                            "Email Address",
+                            "UserName",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                         ),
-                        SizedBox(
-                          height: 5,
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: TextField(
+                            decoration: InputDecoration(
+                                labelText: 'Enter your name',
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 10,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                )),
+                          ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(10),
+                          padding: EdgeInsets.only(left: 15),
+                          child: Text(
+                            "Email",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: TextField(
+                            decoration: InputDecoration(
+                                labelText: 'Enter your email',
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 10,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                )),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 15, top: 10),
+                          child: Text(
+                            "Password",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(10),
                           child: TextField(
                             onChanged: (value) {
                               context
                                   .read<LoginBloc>()
                                   .add(CheckEmailAddressEvent(value));
                             },
+                            obscureText: true,
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                labelText: 'name@example.com',
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                )),
+                              labelText: 'Enter your password',
+                              contentPadding: EdgeInsets.all(10),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -108,11 +154,12 @@ class __BodyState extends State<_Body> {
                   ),
                   TextButton(
                       onPressed: () {
-                        if (checkEmailAddress) {
-
-                        }
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (_) => const HomeScreen()));
+                        if (checkEmailAddress) {}
+                        AuthRepos()
+                            .signUp('admin', 'email@gmail.com', 'password')
+                            .then((value) => Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                                    builder: (_) => const HomeScreen())));
                       },
                       child: Container(
                         width: double.maxFinite,
@@ -125,7 +172,7 @@ class __BodyState extends State<_Body> {
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
                         child: const Text(
-                          'Next',
+                          'Sign Up',
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       )),

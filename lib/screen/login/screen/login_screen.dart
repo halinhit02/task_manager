@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thuc_tap_chuyen_nganh/utils/app_constants.dart';
 
+import '../../../repository/auth_repos.dart';
+import '../../home/home_screen.dart';
 import '../bloc/login_bloc.dart';
-import 'create_account_screen.dart';
-import 'email_address_screen.dart';
+import 'sign_in_screen.dart';
+import 'sign_up_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -154,7 +156,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10),
                       side: BorderSide(color: Theme.of(context).primaryColor),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      AuthRepos().signInWithGoogle().then((value) =>
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (_) => const HomeScreen())));
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
