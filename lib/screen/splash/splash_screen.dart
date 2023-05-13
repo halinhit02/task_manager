@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/login/screen/login_screen.dart';
-import 'package:thuc_tap_chuyen_nganh/utils/app_constants.dart';
 
+import '../../util/app_constants.dart';
 import '../login/bloc/login_bloc.dart';
 
 class SplashScreen extends StatefulWidget {

@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/utils/app_constants.dart';
+import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
 
 import '../../../repository/auth_repos.dart';
+import '../../../util/app_constants.dart';
 import '../../home/home_screen.dart';
 import '../bloc/login_bloc.dart';
 import 'sign_in_screen.dart';
@@ -64,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     onPressed: () {
+                      AuthRepos().signOut();
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => const CreateAccountScreen()));
                     },
@@ -156,12 +157,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10),
                       side: BorderSide(color: Theme.of(context).primaryColor),
                     ),
-                    onPressed: () {
-                      AuthRepos().signInWithGoogle().then((value) =>
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (_) => const HomeScreen())));
-                    },
+                    onPressed: () =>
+                      AuthRepos().signInWithGoogle().then((value) {
+                        if (value != null) {
+                          DatabaseRepo().setUserInfo(value).then((value) {
+                            print('user saved');
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (_) => const HomeScreen()));
+                          }).catchError((e) => print(e));
+                        }
+                      }),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

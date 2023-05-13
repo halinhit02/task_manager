@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,6 +52,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '404910094346',
     projectId: 'taskmanager-9e2b9',
     authDomain: 'taskmanager-9e2b9.firebaseapp.com',
+    databaseURL: 'https://taskmanager-9e2b9-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'taskmanager-9e2b9.appspot.com',
     measurementId: 'G-9Q6RL654JC',
   );
@@ -58,6 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:404910094346:android:a958709e3ef62b0ce447f3',
     messagingSenderId: '404910094346',
     projectId: 'taskmanager-9e2b9',
+    databaseURL: 'https://taskmanager-9e2b9-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'taskmanager-9e2b9.appspot.com',
   );
 
@@ -66,17 +71,9 @@ class DefaultFirebaseOptions {
     appId: '1:404910094346:ios:92d20c68d9d6a64fe447f3',
     messagingSenderId: '404910094346',
     projectId: 'taskmanager-9e2b9',
+    databaseURL: 'https://taskmanager-9e2b9-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'taskmanager-9e2b9.appspot.com',
-    iosClientId: '404910094346-04usrn9in3ifj8lasl23jj4sno80hr0c.apps.googleusercontent.com',
-    iosBundleId: 'com.nhom6.taskManager',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAIjmA6_6_YsuNbBkr-LKk1SggKjiwCb30',
-    appId: '1:404910094346:ios:92d20c68d9d6a64fe447f3',
-    messagingSenderId: '404910094346',
-    projectId: 'taskmanager-9e2b9',
-    storageBucket: 'taskmanager-9e2b9.appspot.com',
+    androidClientId: '404910094346-5qmmlvvnj2d3lu1k1ijpm402apsq6i1k.apps.googleusercontent.com',
     iosClientId: '404910094346-04usrn9in3ifj8lasl23jj4sno80hr0c.apps.googleusercontent.com',
     iosBundleId: 'com.nhom6.taskManager',
   );

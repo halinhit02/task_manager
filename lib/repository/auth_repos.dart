@@ -7,9 +7,20 @@ import '../model/app_user.dart';
 class AuthRepos {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId:
-        '404910094346-e7hqnj14k7s4qt3hmj3c2k4diorui8v2.apps.googleusercontent.com',
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
   );
+
+  Future<bool> isAuthenticated() async {
+    return _auth.currentUser != null;
+  }
+
+  Future<AppUser?> getCurrentUser() async {
+    var user = _auth.currentUser;
+    return getAppUser(user);
+  }
 
   Future<AppUser?> signInWithGoogle() async {
     try {
@@ -21,7 +32,7 @@ class AuthRepos {
         idToken: googleAuthentication?.idToken,
       );
       var userCredential = await _auth.signInWithCredential(credential);
-      return getAppUser(userCredential);
+      return getAppUser(userCredential.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'operation-not-allowed') {
         return Future.error(AppConstants.maintainMode);
@@ -34,11 +45,12 @@ class AuthRepos {
     }
   }
 
-  Future<AppUser?> signInWithEmailPassword(String email, String password) async {
+  Future<AppUser?> signInWithEmailPassword(
+      String email, String password) async {
     try {
       final credential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      return getAppUser(credential);
+      return getAppUser(credential.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return Future.error(AppConstants.weekPassword);
@@ -56,14 +68,15 @@ class AuthRepos {
     return null;
   }
 
-  Future<AppUser?> signUp(String username, String email, String password) async {
+  Future<AppUser?> signUp(
+      String username, String email, String password) async {
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return getAppUser(credential);
+      return getAppUser(credential.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return Future.error(AppConstants.weekPassword);
@@ -80,16 +93,21 @@ class AuthRepos {
     return null;
   }
 
-  AppUser? getAppUser(UserCredential credential) {
-    var user = credential.user;
+  Future<AppUser?> getAppUser(User? user) async {
     if (user != null) {
-      return AppUser(
+      var appUser = AppUser(
           uid: user.uid,
           username: (user.email ?? '').replaceAll('@gmail.com', ''),
           email: user.email ?? '',
           photoURL: user.photoURL ?? '');
+      return appUser;
     } else {
       return null;
     }
+  }
+
+  Future<void> signOut() async {
+    await _googleSignIn.signOut();
+    await _auth.signOut();
   }
 }

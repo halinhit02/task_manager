@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thuc_tap_chuyen_nganh/firebase_options.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/login/bloc/login_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/login/screen/login_screen.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/splash/splash_screen.dart';
 
 void main() async {

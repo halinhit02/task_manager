@@ -1,5 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:thuc_tap_chuyen_nganh/helper/date_time_helper.dart';
+import 'package:thuc_tap_chuyen_nganh/model/comment.dart';
+import 'package:thuc_tap_chuyen_nganh/model/comment_type.dart';
+import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
 
 import 'dialog_widget.dart';
 
@@ -95,7 +98,9 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                           )
                         ],
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Row(
                         children: [
                           Icon(
@@ -148,7 +153,15 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                     )),
                 const Expanded(child: SizedBox()),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      DatabaseRepo().setTaskComment(
+                          Comment(
+                              id: DateTimeHelper.getCurrentTimeMillis()
+                                  .toString(),
+                              content: 'Design the application UI',
+                              time: DateTime.now().millisecondsSinceEpoch),
+                          '1683968710143');
+                    },
                     icon: const Icon(
                       Icons.send,
                       color: Colors.blue,

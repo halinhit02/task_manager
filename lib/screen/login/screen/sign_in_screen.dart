@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:thuc_tap_chuyen_nganh/utils/app_constants.dart';
 
 import '../../../repository/auth_repos.dart';
+import '../../../repository/database_repos.dart';
+import '../../../util/app_constants.dart';
 import '../../home/home_screen.dart';
 
 class CreateAccountScreen extends StatefulWidget {
@@ -92,13 +93,18 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               ),
             ),
             TextButton(
-                onPressed: () {
-                  AuthRepos()
-                      .signInWithEmailPassword('email@gmail.com', 'password')
-                      .then((value) => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => const HomeScreen())));
-
-                },
+                onPressed: () => AuthRepos()
+                        .signInWithEmailPassword('email@gmail.com', 'password')
+                        .then((value) {
+                      if (value != null) {
+                        DatabaseRepo().setUserInfo(value).then((value) {
+                          print('user saved');
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (_) => const HomeScreen()));
+                        });
+                      }
+                    }),
                 child: Container(
                   width: double.maxFinite,
                   padding: const EdgeInsets.symmetric(vertical: 10),

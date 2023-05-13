@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/utils/app_constants.dart';
 
 import '../../../repository/auth_repos.dart';
+import '../../../util/app_constants.dart';
 import '../../home/home_screen.dart';
 import '../bloc/login_bloc.dart';
 
@@ -156,7 +156,7 @@ class __BodyState extends State<_Body> {
                       onPressed: () {
                         if (checkEmailAddress) {}
                         AuthRepos()
-                            .signUp('admin', 'email@gmail.com', 'password')
+                            .signUp('tester', 'tester@gmail.com', '123456')
                             .then((value) => Navigator.of(context)
                                 .pushReplacement(MaterialPageRoute(
                                     builder: (_) => const HomeScreen())));
