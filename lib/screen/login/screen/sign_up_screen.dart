@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../helper/dialog_helper.dart';
 import '../../../repository/auth_repos.dart';
+import '../../../repository/database_repos.dart';
 import '../../../util/app_constants.dart';
 import '../../home/home_screen.dart';
 import '../bloc/login_bloc.dart';
@@ -27,24 +29,50 @@ class _Body extends StatefulWidget {
 
 class __BodyState extends State<_Body> {
   bool checkEmailAddress = false;
+  String userName = '';
+  String email = '';
+  String password = '';
+  String? errorUserName;
+  String? errorEmail;
+  String? errorPassword;
 
-  // TextEditingController _controller = TextEditingController();
+  void _singUp() {
+    AuthRepos().signOut();
+    AuthRepos().signUp(userName, email, password).then((value) {
+      if (value != null) {
+        DatabaseRepo().setUserInfo(value).then((value) {
+          print('user saved');
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const HomeScreen()));
+        }).catchError((e) => print(e));
+      }
+    });
+    DialogHelper.showSnackBar(context, 'cập nhật thành thạo');
+    Navigator.of(context).pop();
+  }
 
-  @override
-  void dispose() {
-    super.dispose();
-    //_controller.dispose();
+  void _hanldeListener(BuildContext context, LoginState state) {
+    if (state is CheckEmailAddressState) {
+      checkEmailAddress = state.checkEmailAddress;
+    }
+    if (state is ValidateUserNameState) {
+      errorUserName = 'Không để trống trường này';
+    }
+    if (state is ValidateEmailState) {
+      errorEmail = 'Không để trống trường này';
+    }
+    if (state is ValidatePasswordState) {
+      errorPassword = 'Không để trống trường này';
+    }
+    if (state.showDialogConfirm) {
+      _singUp();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
-        if (state is CheckEmailAddressState) {
-          checkEmailAddress = state.checkEmailAddress;
-        }
-      },
-      child: BlocBuilder<LoginBloc, LoginState>(
+    return BlocConsumer<LoginBloc, LoginState>(
+        listener: (context, state) => _hanldeListener(context, state),
         builder: (context, state) {
           return Scaffold(
             body: SafeArea(
@@ -55,7 +83,7 @@ class __BodyState extends State<_Body> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
-                          height: 60,
+                          height: 30,
                         ),
                         Center(
                           child: Text(
@@ -74,7 +102,7 @@ class __BodyState extends State<_Body> {
                           ),
                         ),
                         SizedBox(
-                          height: 40,
+                          height: 20,
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: 15),
@@ -88,7 +116,12 @@ class __BodyState extends State<_Body> {
                           padding: EdgeInsets.all(10),
                           child: TextField(
                             decoration: InputDecoration(
+                                errorText: state.userName.isNotEmpty
+                                    ? null
+                                    : errorUserName,
                                 labelText: 'Enter your name',
+                                labelStyle: const TextStyle(
+                                    color: Colors.black, fontSize: 14),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 10,
                                   vertical: 10,
@@ -97,6 +130,12 @@ class __BodyState extends State<_Body> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                 )),
+                            onChanged: (value) {
+                              userName = value;
+                              context
+                                  .read<LoginBloc>()
+                                  .add(UpdateUserNameEvent(value));
+                            },
                           ),
                         ),
                         Padding(
@@ -109,8 +148,10 @@ class __BodyState extends State<_Body> {
                         ),
                         Container(
                           padding: EdgeInsets.all(10),
-                          child: TextField(
+                          child: TextFormField(
                             decoration: InputDecoration(
+                                errorText:
+                                    state.email.isNotEmpty ? null : errorEmail,
                                 labelText: 'Enter your email',
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 10,
@@ -120,6 +161,12 @@ class __BodyState extends State<_Body> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                 )),
+                            onChanged: (value) {
+                              email = value;
+                              context
+                                  .read<LoginBloc>()
+                                  .add(UpdateEmailEvent(value));
+                            },
                           ),
                         ),
                         Container(
@@ -132,14 +179,18 @@ class __BodyState extends State<_Body> {
                         ),
                         Padding(
                           padding: EdgeInsets.all(10),
-                          child: TextField(
+                          child: TextFormField(
                             onChanged: (value) {
+                              password = value;
                               context
                                   .read<LoginBloc>()
-                                  .add(CheckEmailAddressEvent(value));
+                                  .add(UpdatePasswordEvent(value));
                             },
                             obscureText: true,
                             decoration: InputDecoration(
+                              errorText: state.password.isNotEmpty
+                                  ? null
+                                  : errorPassword,
                               labelText: 'Enter your password',
                               contentPadding: EdgeInsets.all(10),
                               border: OutlineInputBorder(
@@ -152,36 +203,28 @@ class __BodyState extends State<_Body> {
                       ],
                     ),
                   ),
-                  TextButton(
-                      onPressed: () {
-                        if (checkEmailAddress) {}
-                        AuthRepos()
-                            .signUp('tester', 'tester@gmail.com', '123456')
-                            .then((value) => Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                                    builder: (_) => const HomeScreen())));
-                      },
-                      child: Container(
-                        width: double.maxFinite,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: checkEmailAddress
-                                ? Theme.of(context).primaryColor
-                                : Colors.grey,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10))),
-                        child: const Text(
-                          'Sign Up',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      )),
                 ],
               ),
             ),
+            bottomNavigationBar: TextButton(
+                onPressed: () {
+                  context.read<LoginBloc>().add(CheckValidaEvent());
+                },
+                child: Container(
+                  width: double.maxFinite,
+                  height: 50,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  child: const Text(
+                    'Sign Up',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                )),
           );
-        },
-      ),
-    );
+        });
   }
 }

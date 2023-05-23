@@ -4,6 +4,7 @@ import 'package:thuc_tap_chuyen_nganh/helper/date_time_helper.dart';
 import 'package:thuc_tap_chuyen_nganh/model/task.dart';
 import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/create_task/screen/widget/item_task.dart';
+import 'package:intl/intl.dart';
 
 import '../bloc/menu_homepage_bloc.dart';
 
@@ -28,11 +29,32 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   TimeOfDay time = const TimeOfDay(hour: 07, minute: 00);
+  late List<Task> listTask;
+
+  @override
+  void initState() {
+    super.initState();
+    listTask = [];
+    _onGetListTask();
+  }
+
+  void _onGetListTask() {
+    context.read<MenuHomepageBloc>().add(GetListTaskEvent());
+  }
+
+  void _handleListener(BuildContext context, MenuHomepageState state) {
+    if (state is TimeState) {
+      time = state.time;
+    }
+    if (state is GetListTaskSuccessState) {
+      listTask = state.listTask;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<MenuHomepageBloc, MenuHomepageState>(
-      listener: (context, state) => {},
+      listener: (context, state) => _handleListener(context, state),
       child: BlocBuilder<MenuHomepageBloc, MenuHomepageState>(
         builder: (context, state) {
           return Scaffold(
@@ -149,7 +171,8 @@ class _BodyState extends State<Body> {
                   Expanded(
                       child: ListView.builder(
                     itemCount: 10,
-                    itemBuilder: (_, index) => ItemTask(),
+                    itemBuilder: (_, index) =>
+                        ItemTask(onClickEdit: showCreateTaskSheet),
                   )),
                 ],
               ),
@@ -177,7 +200,7 @@ class _BodyState extends State<Body> {
         context: context,
         isScrollControlled: true,
         constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 1 / 2,
+          maxHeight: MediaQuery.of(context).size.height * 2 / 3,
         ),
         builder: (BuildContext context) {
           return Container(
@@ -192,6 +215,9 @@ class _BodyState extends State<Body> {
                     contentPadding: EdgeInsets.zero,
                     border: OutlineInputBorder(borderSide: BorderSide.none),
                   ),
+                  onChanged: (value) {
+                    context.read<MenuHomepageBloc>().add(TitleEvent(value));
+                  },
                 ),
                 TextField(
                   autofocus: true,
@@ -201,6 +227,11 @@ class _BodyState extends State<Body> {
                     contentPadding: EdgeInsets.zero,
                     border: OutlineInputBorder(borderSide: BorderSide.none),
                   ),
+                  onChanged: (value) {
+                    context
+                        .read<MenuHomepageBloc>()
+                        .add(DescriptionEvent(value));
+                  },
                 ),
                 MaterialButton(
                   onPressed: () {
@@ -221,7 +252,8 @@ class _BodyState extends State<Body> {
                   onPressed: () {
                     DatabaseRepo()
                         .setTask(Task(
-                            id: DateTimeHelper.getCurrentTimeMillis().toString(),
+                            id: DateTimeHelper.getCurrentTimeMillis()
+                                .toString(),
                             title: titleTextEditing.text,
                             description: descriptionTextEditing.text,
                             time: DateTimeHelper.getCurrentTimeMillis()))
@@ -255,10 +287,12 @@ class _BodyState extends State<Body> {
   }
 
   void _showDateTimeSheet(Function(DateTime) onTimeAdded) {
+    TextEditingController currentDate = TextEditingController();
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
           DateTime pickedDateTime = DateTime.now();
+          //currentDate.text = DateFormat('yyyy-MM-dd').format(pickedDateTime);
           return SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -280,18 +314,25 @@ class _BodyState extends State<Body> {
                     onTap: () {
                       showDatePicker(
                         context: context,
-                        initialDate: DateTime.now(),
+                        initialEntryMode: DatePickerEntryMode.calendarOnly,
+                        initialDate: pickedDateTime,
                         firstDate: DateTime.now(),
                         lastDate: DateTime(DateTime.now().year + 1, -1),
-                      );
+                      ).then((value) => setState(() {
+                            pickedDateTime = value ?? DateTime.now();
+                            currentDate.text =
+                                DateFormat('yyyy-MM-dd').format(value!);
+                            context
+                                .read<MenuHomepageBloc>()
+                                .add(DateEvent(value));
+                          }));
                     },
                     leading: const Icon(Icons.sunny),
                     title: const Text(
                       'Date',
                       style: TextStyle(color: Colors.black),
                     ),
-                    trailing: Text(
-                        '${pickedDateTime.day}/${pickedDateTime.month}/${pickedDateTime.year}'),
+                    trailing: Text('${currentDate.text}'),
                     contentPadding: EdgeInsets.zero,
                   ),
                   ListTile(
@@ -303,6 +344,9 @@ class _BodyState extends State<Body> {
                             minute: pickedDateTime.minute,
                           ));
                       if (newTime != null) {
+                        context
+                            .read<MenuHomepageBloc>()
+                            .add(TimeEvent(newTime));
                         pickedDateTime = pickedDateTime.copyWith(
                             hour: newTime.hour, minute: newTime.minute);
                       }

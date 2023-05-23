@@ -24,4 +24,13 @@ class DialogHelper {
       ),
     );
   }
+
+  static showLoadingDialogcon(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) => const Dialog(
+              backgroundColor: Colors.transparent,
+              child: Center(child: Text('aidjfjd')),
+            ));
+  }
 }

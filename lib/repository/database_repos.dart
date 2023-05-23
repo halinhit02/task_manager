@@ -162,7 +162,7 @@ class DatabaseRepo {
     }
     var userUid = user.uid;
     int todayTimeMillis =
-    DateTimeHelper.getDateFromTimeMillis(int.parse(taskId));
+        DateTimeHelper.getDateFromTimeMillis(int.parse(taskId));
 
     var commentList = <Comment>[];
     try {
@@ -174,7 +174,8 @@ class DatabaseRepo {
           .child(AppConstants.COMMENTS_KEY)
           .get();
       for (var snapshot in snapshots.children) {
-        commentList.add(Comment.fromMap(snapshot.value as Map<String, dynamic>));
+        commentList
+            .add(Comment.fromMap(snapshot.value as Map<String, dynamic>));
       }
       return commentList;
     } catch (e) {
@@ -191,7 +192,7 @@ class DatabaseRepo {
     }
     var userUid = user.uid;
     int todayTimeMillis =
-    DateTimeHelper.getDateFromTimeMillis(int.parse(taskId));
+        DateTimeHelper.getDateFromTimeMillis(int.parse(taskId));
     return _database
         .ref(AppConstants.TASKS_KEY)
         .child(userUid)

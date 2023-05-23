@@ -45,6 +45,8 @@ dependencies:
   firebase_auth:
   firebase_database:
   google_sign_in:
+  dropdown_button2: ^2.1.3
+
 
 
 dev_dependencies:
