@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thuc_tap_chuyen_nganh/helper/date_time_helper.dart';
 import 'package:thuc_tap_chuyen_nganh/model/comment.dart';
-import 'package:thuc_tap_chuyen_nganh/model/comment_type.dart';
 import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
 
 import 'dialog_widget.dart';
@@ -14,6 +13,7 @@ class MyBottomSheet extends StatefulWidget {
 }
 
 class _MyBottomSheetState extends State<MyBottomSheet> {
+  String comment = '';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -141,6 +141,11 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                 hintText: 'Tyiping ......',
                 border: OutlineInputBorder(borderSide: BorderSide.none),
               ),
+              onChanged: (value) {
+                setState(() {
+                  comment = value;
+                });
+              },
             ),
             Row(
               children: [
@@ -158,7 +163,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                           Comment(
                               id: DateTimeHelper.getCurrentTimeMillis()
                                   .toString(),
-                              content: 'Design the application UI',
+                              content: comment,
                               time: DateTime.now().millisecondsSinceEpoch),
                           '1683968710143');
                     },

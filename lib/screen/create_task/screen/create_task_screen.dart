@@ -292,7 +292,6 @@ class _BodyState extends State<Body> {
         context: context,
         builder: (BuildContext context) {
           DateTime pickedDateTime = DateTime.now();
-          //currentDate.text = DateFormat('yyyy-MM-dd').format(pickedDateTime);
           return SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(

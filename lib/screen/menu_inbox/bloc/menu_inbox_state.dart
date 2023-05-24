@@ -5,3 +5,8 @@ class MenuInboxState {
 }
 
 class MenuInboxInitial extends MenuInboxState {}
+
+class GetListTaskSuccessState extends MenuInboxState {
+  List<Task> listTask;
+  GetListTaskSuccessState(this.listTask);
+}

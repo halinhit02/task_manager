@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/src/dropdown_button2.dart';
-
-import '../../../../helper/dialog_helper.dart';
 import 'show_dialog.dart';
 
 class ItemTask extends StatefulWidget {
@@ -185,26 +183,24 @@ class MenuItem {
 }
 
 class MenuItems {
-  static const List<MenuItem> firstItems = [home, share];
+  static const List<MenuItem> firstItems = [delete, edit];
 
-  static const home = MenuItem(text: 'Delete', icon: Icons.delete);
-  static const share = MenuItem(text: 'Edit', icon: Icons.edit);
+  static const delete = MenuItem(text: 'Delete', icon: Icons.delete);
+  static const edit = MenuItem(text: 'Edit', icon: Icons.edit);
 
   static Widget buildItem(MenuItem item, String text, BuildContext context,
       Function()? _oncliclEdit) {
     return GestureDetector(
       onTap: () {
-        if (item.text == home.text) {
+        if (item.text == delete.text) {
           showDialog(
               context: context,
               builder: (context) {
                 return ShowDialog();
               });
-          print('alo text Home');
         }
-        if (item.text == share.text) {
+        if (item.text == edit.text) {
           _oncliclEdit!();
-          print('alo text share');
         }
       },
       child: Row(
