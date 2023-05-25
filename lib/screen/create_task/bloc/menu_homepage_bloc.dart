@@ -10,8 +10,14 @@ part 'menu_homepage_state.dart';
 
 class MenuHomepageBloc extends Bloc<MenuHomepageEvent, MenuHomepageState> {
   Task? task;
+  // late String title;
+  // late String description;
   List<Task> listTask = [];
+  DateTime day = DateTime.now();
+  TimeOfDay time = const TimeOfDay(hour: 00, minute: 00);
   MenuHomepageBloc() : super(MenuHomepageInitial()) {
+    // title = '';
+    // description = '';
     on<TitleEvent>(_onUpdateTitle);
     on<DescriptionEvent>(_onUpdateDescription);
     on<DateEvent>(_onUpdateDay);
@@ -40,18 +46,19 @@ class MenuHomepageBloc extends Bloc<MenuHomepageEvent, MenuHomepageState> {
 
   void _onCreateTask(
       CreateTaskEvent event, Emitter<MenuHomepageState> emit) async {
-    await DatabaseRepo().setTask(task!);
+    await DatabaseRepo.instance.setTask(task!);
   }
 
   void _getListTask(
       GetListTaskEvent event, Emitter<MenuHomepageState> emit) async {
-    listTask = await DatabaseRepo()
+    listTask = await DatabaseRepo.instance
         .getTasksByDate(DateTimeHelper.getCurrentTimeMillis());
+    print('check ${listTask.length}');
   }
 
   void _onDeleteTask(
       DeleteTaskEvent event, Emitter<MenuHomepageState> emit) async {
-    await DatabaseRepo().deleteTask(event.task);
+    await DatabaseRepo.instance.deleteTask(event.task);
     emit(DeleteTaskSuccessState());
   }
 }

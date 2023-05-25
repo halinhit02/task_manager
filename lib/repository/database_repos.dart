@@ -9,12 +9,10 @@ import '../model/task.dart';
 
 class DatabaseRepo {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
-  static DatabaseRepo? _databaseRepo;
 
-  static DatabaseRepo instance() {
-    _databaseRepo ??= DatabaseRepo();
-    return _databaseRepo!;
-  }
+  DatabaseRepo._();
+
+  static final instance = DatabaseRepo._();
 
   /// *
   ///  This function is used to save user information
@@ -93,10 +91,11 @@ class DatabaseRepo {
           .child(dateKey)
           .get();
       for (var snapshot in snapshots.children) {
-        taskList.add(Task.fromMap(snapshot.value as Map<String, dynamic>));
+        taskList.add(Task.fromMap(snapshot.value as Map));
       }
       return taskList;
     } catch (e) {
+      print(e);
       return Future.error(AppConstants.errorOccurred);
     }
   }

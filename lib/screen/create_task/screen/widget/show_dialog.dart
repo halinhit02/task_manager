@@ -29,7 +29,7 @@ class _ShowDialogState extends State<ShowDialog> {
               const SizedBox(
                 height: 10,
               ),
-              const Text('Are you sure with your decision ?'),
+              const Text('Are you sure with your decision?'),
               const SizedBox(
                 height: 10,
               ),

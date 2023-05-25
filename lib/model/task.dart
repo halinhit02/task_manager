@@ -14,11 +14,17 @@ class Task {
       this.type = TaskType.Waiting,
       required this.time});
 
-  factory Task.fromMap(Map<String, dynamic> map) => Task(
+  factory Task.fromMap(Map<dynamic, dynamic> map) => Task(
         id: map['id'] ?? '',
         title: map['title'] ?? '',
         description: map['description'] ?? '',
-        type: map['type'] ?? TaskType.Waiting,
+        type: map['type'] == 0
+            ? TaskType.Waiting
+            : map['type'] == 1
+                ? TaskType.Running
+                : map['type'] == 2
+                    ? TaskType.Finished
+                    : TaskType.Finished,
         time: map['time'] ?? 0,
       );
 

@@ -37,7 +37,7 @@ class _MyProfileState extends State<MyProfile> {
               height: 10,
             ),
             FutureBuilder<AppUser?>(
-                future: DatabaseRepo.instance().getUserInfo(),
+                future: DatabaseRepo.instance.getUserInfo(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     DialogHelper.showSnackBar(context, snapshot.error.toString());

@@ -153,7 +153,7 @@ class _MyEditProfileState extends State<MyEditProfile> {
                           return;
                         } else {
                           DialogHelper.showLoadingDialog(context);
-                          DatabaseRepo.instance()
+                          DatabaseRepo.instance
                               .updateUserInfo(snapshot.data?.uid ?? 'WRONGKEY',
                                   usernameController.text)
                               .then((value) {

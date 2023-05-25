@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/login/bloc/login_bloc.dart';
@@ -34,22 +35,21 @@ class _BodyState extends State<_Body> {
   String? errorPassword;
 
   void _onSignIn() {
-    AuthRepos().signOut();
     DialogHelper.showLoadingDialog(context);
     AuthRepos().signInWithEmailPassword(email, password).then((value) {
       if (value != null) {
-        DatabaseRepo.instance().setUserInfo(value).then((value) {
-          Navigator.pop(context);
+        DatabaseRepo.instance.setUserInfo(value).then((value) {
+          Navigator.of(context).pop();
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (_) => const HomeScreen()));
         }).catchError((e) {
-          Navigator.pop(context);
-          DialogHelper.showSnackBar(context, e.toString());
+          Navigator.of(context).pop();
+          DialogHelper.showSnackBar(context, e.toString(), isError: true);
         });
       }
     }).catchError((e) {
-      Navigator.pop(context);
-      DialogHelper.showSnackBar(context, e.toString());
+      Navigator.of(context).pop();
+      DialogHelper.showSnackBar(context, e.toString(), isError: true);
     });
   }
 
@@ -93,8 +93,7 @@ class _BodyState extends State<_Body> {
                         ),
                         Center(
                           child: Text(
-                            'Your work faster and structured with ${AppConstants
-                                .APPNAME}',
+                            'Your work faster and structured with ${AppConstants.APPNAME}',
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),
@@ -115,14 +114,14 @@ class _BodyState extends State<_Body> {
                             decoration: InputDecoration(
                                 labelText: 'Enter your email',
                                 errorText:
-                                state.email.isNotEmpty ? null : errorEmail,
+                                    state.email.isNotEmpty ? null : errorEmail,
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 10,
                                   vertical: 10,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                      BorderRadius.all(Radius.circular(10)),
                                 )),
                             onChanged: (value) {
                               email = value;
@@ -141,7 +140,7 @@ class _BodyState extends State<_Body> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: TextFormField(
                             obscureText: true,
                             decoration: InputDecoration(
@@ -149,10 +148,10 @@ class _BodyState extends State<_Body> {
                                   ? null
                                   : errorPassword,
                               labelText: 'Enter your password',
-                              contentPadding: EdgeInsets.all(10),
-                              border: OutlineInputBorder(
+                              contentPadding: const EdgeInsets.all(10),
+                              border: const OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10)),
+                                    BorderRadius.all(Radius.circular(10)),
                               ),
                             ),
                             onChanged: (value) {
@@ -175,11 +174,9 @@ class _BodyState extends State<_Body> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: Theme
-                                .of(context)
-                                .primaryColor,
+                            color: Theme.of(context).primaryColor,
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                                const BorderRadius.all(Radius.circular(10))),
                         child: const Text(
                           'Sign In',
                           style: TextStyle(color: Colors.white, fontSize: 18),

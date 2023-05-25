@@ -6,12 +6,14 @@ import '../../../model/task.dart';
 import '../../../repository/database_repos.dart';
 
 part 'menu_inbox_event.dart';
+
 part 'menu_inbox_state.dart';
 
 class MenuInboxBloc extends Bloc<MenuInboxEvent, MenuInboxState> {
   List<Task> listTask = [];
   Task? task;
   late String comment;
+
   MenuInboxBloc() : super(MenuInboxInitial()) {
     comment = '';
     on<GetListCommentEvent>(_onGetListCommentEvent);
@@ -23,7 +25,7 @@ class MenuInboxBloc extends Bloc<MenuInboxEvent, MenuInboxState> {
 
   void _onGetListCommentEvent(
       GetListCommentEvent event, Emitter<MenuInboxState> emit) async {
-    listTask = await DatabaseRepo()
+    listTask = await DatabaseRepo.instance
         .getTasksByDate(DateTimeHelper.getCurrentTimeMillis());
     emit(GetListTaskSuccessState(listTask));
   }

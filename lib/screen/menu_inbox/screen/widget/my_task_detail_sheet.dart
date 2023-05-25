@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:thuc_tap_chuyen_nganh/helper/date_time_helper.dart';
 import 'package:thuc_tap_chuyen_nganh/model/comment.dart';
+import 'package:thuc_tap_chuyen_nganh/model/task.dart';
 import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
 
 import 'dialog_widget.dart';
 
-class MyBottomSheet extends StatefulWidget {
-  const MyBottomSheet({Key? key}) : super(key: key);
+class MyTaskDetailSheet extends StatefulWidget {
+  const MyTaskDetailSheet({Key? key, required this.task}) : super(key: key);
+
+  final Task task;
 
   @override
-  State<MyBottomSheet> createState() => _MyBottomSheetState();
+  State<MyTaskDetailSheet> createState() => _MyTaskDetailSheetState();
 }
 
-class _MyBottomSheetState extends State<MyBottomSheet> {
+class _MyTaskDetailSheetState extends State<MyTaskDetailSheet> {
   String comment = '';
+
   @override
   Widget build(BuildContext context) {
+    var dateTime = DateTime.fromMillisecondsSinceEpoch(widget.task.time);
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Column(
           children: [
             const SizedBox(
@@ -72,8 +78,8 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Masyla Website Project',
-                        style: TextStyle(
+                        widget.task.title,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -82,8 +88,8 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                         height: 10,
                       ),
                       Text(
-                        'One of the website project in the field of digital services, located in california',
-                        style: TextStyle(color: Colors.grey),
+                        widget.task.description,
+                        style: const TextStyle(color: Colors.grey),
                       ),
                       const SizedBox(
                         height: 20,
@@ -93,7 +99,8 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                           Icon(Icons.timer_sharp, color: Colors.red, size: 18),
                           const SizedBox(width: 10),
                           Text(
-                            '08:30 PM',
+                            DateFormat(DateFormat.HOUR24_MINUTE)
+                                .format(dateTime),
                             style: TextStyle(color: Colors.red, fontSize: 16),
                           )
                         ],
@@ -101,7 +108,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
+                      /*Row(
                         children: [
                           Icon(
                             Icons.message_outlined,
@@ -125,20 +132,20 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                             ),
                           )
                         ],
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               thickness: 1,
             ),
             TextField(
               autofocus: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 contentPadding: EdgeInsets.symmetric(vertical: 15),
-                hintText: 'Tyiping ......',
+                hintText: 'Enter your comment...',
                 border: OutlineInputBorder(borderSide: BorderSide.none),
               ),
               onChanged: (value) {
@@ -159,13 +166,14 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                 const Expanded(child: SizedBox()),
                 IconButton(
                     onPressed: () {
-                      DatabaseRepo().setTaskComment(
-                          Comment(
-                              id: DateTimeHelper.getCurrentTimeMillis()
-                                  .toString(),
-                              content: comment,
-                              time: DateTime.now().millisecondsSinceEpoch),
-                          '1683968710143');
+                      DatabaseRepo.instance.setTaskComment(
+                        Comment(
+                            id: DateTimeHelper.getCurrentTimeMillis()
+                                .toString(),
+                            content: comment,
+                            time: DateTime.now().millisecondsSinceEpoch),
+                        widget.task.id,
+                      );
                     },
                     icon: const Icon(
                       Icons.send,

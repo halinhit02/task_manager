@@ -6,7 +6,6 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final AuthRepos _authRepos = AuthRepos();
   late bool check;
   late String userName;
   late String email;
@@ -24,7 +23,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<UpdateUserNameEvent>(_onUpdateUserName);
     on<UpdateEmailEvent>(_onUpdateEmail);
     on<UpdatePasswordEvent>(_onUpdatePassword);
-    on<CreateNewAccount>(_onCreateNewAccount);
     on<CheckValidaEvent>(_onCheckValidaEvent);
     on<UpdateEmailSignInEvent>(_onUpdateEmailSignIn);
     on<UpdatePasswordSignInEvent>(_onUpdatePasswordSignIn);
@@ -32,7 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _onCheckEmailAddress(CheckEmailAddressEvent event, Emitter emit) async {
-    if (event.emailAddress.length > 0) {
+    if (event.emailAddress.isNotEmpty) {
       check = true;
     } else {
       check = false;
@@ -60,12 +58,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void _onUpdatePasswordSignIn(
       UpdatePasswordSignInEvent event, Emitter<LoginState> emit) {
     passwordSignIn = event.password;
-  }
-
-  void _onCreateNewAccount(
-      CreateNewAccount event, Emitter<LoginState> emit) async {
-    await _authRepos.signUp(userName, email, password);
-    emit(CreateNewAccountSuccess());
   }
 
   void _onCheckValidaEvent(CheckValidaEvent event, Emitter<LoginState> emit) {

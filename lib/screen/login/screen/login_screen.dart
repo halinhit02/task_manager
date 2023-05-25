@@ -158,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 DialogHelper.showLoadingDialog(context);
                 AuthRepos().signInWithGoogle().then((value) {
                   if (value != null) {
-                    DatabaseRepo().setUserInfo(value).then((value) {
+                    DatabaseRepo.instance.setUserInfo(value).then((value) {
                       Navigator.pop(context);
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (_) => const HomeScreen()));

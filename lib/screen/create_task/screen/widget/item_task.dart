@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/src/dropdown_button2.dart';
+import 'package:intl/intl.dart';
+import 'package:thuc_tap_chuyen_nganh/model/task.dart';
+
+import '../../../../helper/dialog_helper.dart';
 import 'show_dialog.dart';
 
-class ItemTask extends StatefulWidget {
+class ItemTask extends StatelessWidget {
   final Function()? onClickEdit;
-  const ItemTask({Key? key, this.onClickEdit}) : super(key: key);
+  final Task task;
+  final int index;
 
-  @override
-  State<ItemTask> createState() => _ItemTaskState();
-}
+  const ItemTask(
+      {Key? key, required this.task, required this.index, this.onClickEdit})
+      : super(key: key);
 
-class _ItemTaskState extends State<ItemTask> {
   @override
   Widget build(BuildContext context) {
+    var dateTime = DateTime.fromMillisecondsSinceEpoch(task.time);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -48,22 +53,25 @@ class _ItemTaskState extends State<ItemTask> {
                     ),
                     Expanded(
                       child: Text(
-                        'Priority task 1',
-                        style: TextStyle(color: Colors.white),
+                        'Priority task ${index + 1}',
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                     DropdownButton2(
-                      customButton: const Icon(
-                        Icons.menu_rounded,
-                        size: 30,
-                        color: Colors.white,
+                      customButton: const Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Icon(
+                          Icons.menu_rounded,
+                          size: 24,
+                          color: Colors.white,
+                        ),
                       ),
                       items: [
                         ...MenuItems.firstItems.map(
                           (item) => DropdownMenuItem<MenuItem>(
                             value: item,
                             child: MenuItems.buildItem(
-                                item, item.text, context, widget.onClickEdit),
+                                item, item.text, context, onClickEdit),
                           ),
                         ),
                       ],
@@ -77,7 +85,9 @@ class _ItemTaskState extends State<ItemTask> {
                         elevation: 8,
                         offset: const Offset(0, 8),
                       ),
-                      onChanged: (value) {},
+                      onChanged: (value) {
+
+                      },
                       menuItemStyleData: MenuItemStyleData(
                         customHeights: [
                           ...List<double>.filled(
@@ -85,9 +95,6 @@ class _ItemTaskState extends State<ItemTask> {
                         ],
                         padding: const EdgeInsets.only(left: 16, right: 16),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
                     ),
                   ],
                 ),
@@ -117,12 +124,26 @@ class _ItemTaskState extends State<ItemTask> {
                       width: 15,
                     ),
                     Expanded(
-                      child: Text(
-                        'Masyla Website Project',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            task.title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            task.title,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -138,16 +159,17 @@ class _ItemTaskState extends State<ItemTask> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Icon(
+                  const Icon(
                     Icons.alarm_rounded,
                     size: 18,
                     color: Colors.red,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 6),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
                     child: Text(
-                      '08:00 PM',
-                      style: TextStyle(
+                      DateFormat(DateFormat.HOUR24_MINUTE).format(dateTime),
+                      style: const TextStyle(
                         color: Colors.red,
                       ),
                     ),
@@ -156,8 +178,9 @@ class _ItemTaskState extends State<ItemTask> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        'Today, Mon 20 Jul 2022',
-                        style: TextStyle(color: Colors.black54),
+                        DateFormat(DateFormat.YEAR_MONTH_WEEKDAY_DAY)
+                            .format(dateTime),
+                        style: const TextStyle(color: Colors.black54),
                       ),
                     ),
                   ),
@@ -183,24 +206,24 @@ class MenuItem {
 }
 
 class MenuItems {
-  static const List<MenuItem> firstItems = [delete, edit];
+  static const List<MenuItem> firstItems = [home, share];
 
-  static const delete = MenuItem(text: 'Delete', icon: Icons.delete);
-  static const edit = MenuItem(text: 'Edit', icon: Icons.edit);
+  static const home = MenuItem(text: 'Delete', icon: Icons.delete);
+  static const share = MenuItem(text: 'Edit', icon: Icons.edit);
 
   static Widget buildItem(MenuItem item, String text, BuildContext context,
-      Function()? _oncliclEdit) {
+      Function()? onclickEdit) {
     return GestureDetector(
       onTap: () {
-        if (item.text == delete.text) {
+        if (item.text == home.text) {
           showDialog(
               context: context,
               builder: (context) {
-                return ShowDialog();
+                return const ShowDialog();
               });
         }
-        if (item.text == edit.text) {
-          _oncliclEdit!();
+        if (item.text == share.text) {
+          onclickEdit!();
         }
       },
       child: Row(

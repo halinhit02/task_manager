@@ -37,18 +37,23 @@ class __BodyState extends State<_Body> {
   String? errorPassword;
 
   void _singUp() {
-    AuthRepos().signOut();
+    DialogHelper.showLoadingDialog(context);
     AuthRepos().signUp(userName, email, password).then((value) {
       if (value != null) {
-        DatabaseRepo().setUserInfo(value).then((value) {
-          print('user saved');
+        DatabaseRepo.instance.setUserInfo(value).then((value) {
+          Navigator.pop(context);
+          DialogHelper.showSnackBar(context, 'Tài khoản đã được tạo.');
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (_) => const HomeScreen()));
-        }).catchError((e) => print(e));
+        }).catchError((e) {
+          Navigator.of(context).pop();
+          DialogHelper.showSnackBar(context, e.toString(), isError: true);
+        });
       }
+    }).catchError((e) {
+      Navigator.of(context).pop();
+      DialogHelper.showSnackBar(context, e.toString(), isError: true);
     });
-    DialogHelper.showSnackBar(context, 'cập nhật thành thạo');
-    Navigator.of(context).pop();
   }
 
   void _hanldeListener(BuildContext context, LoginState state) {

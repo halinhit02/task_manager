@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/menu_inbox/screen/widget/my_bottom_sheet.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/menu_inbox/screen/widget/my_task_detail_sheet.dart';
 
 import '../../../helper/date_time_helper.dart';
 import '../../../model/task.dart';
@@ -30,6 +30,7 @@ class _Body extends StatefulWidget {
 
 class __BodyState extends State<_Body> {
   late List<Task> listComment;
+  final DatabaseRepo _databaseRepo = DatabaseRepo.instance;
 
   @override
   void initState() {
@@ -54,33 +55,58 @@ class __BodyState extends State<_Body> {
       listener: (context, state) => _handleListener(context, state),
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.white,
-            title: const Text(
-              'Inbox',
-              style: TextStyle(color: Colors.black),
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.white,
+              title: const Text(
+                'Inbox',
+                style: TextStyle(color: Colors.black),
+              ),
+              centerTitle: true,
             ),
-            centerTitle: true,
-          ),
-          body: ListView.builder(
-            itemCount: 10,
-            itemBuilder: (_, index) => InkWell(
-              onTap: () => _showBottomSheep(),
-              child: ItemTask(onClickEdit: showCreateTaskSheet),
-            ),
-          ),
-        );
+            body: FutureBuilder<List<Task>>(
+                future: _databaseRepo.getTasksByDate(
+                  DateTime.now().millisecondsSinceEpoch,
+                ),
+                builder: (_, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text(snapshot.error.toString()),
+                    );
+                  }
+                  if (snapshot.hasData && snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text('There are no data.'),
+                    );
+                  }
+                  var taskList = snapshot.data ?? [];
+                  return ListView.builder(
+                    itemCount: taskList.length,
+                    itemBuilder: (_, index) => InkWell(
+                      onTap: () => _showTaskDetailSheet(taskList[index]),
+                      child: ItemTask(
+                        task: taskList[index],
+                        onClickEdit: () => showCreateTaskSheet(),
+                        index: index,
+                      ),
+                    ),
+                  );
+                }));
       },
     );
   }
 
-  void _showBottomSheep() {
+  void _showTaskDetailSheet(Task task) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return const MyBottomSheet();
+          return MyTaskDetailSheet(task: task,);
         });
   }
 
@@ -139,7 +165,7 @@ class __BodyState extends State<_Body> {
                 const SizedBox(height: 10),
                 MaterialButton(
                   onPressed: () {
-                    DatabaseRepo()
+                   _databaseRepo
                         .setTask(Task(
                             id: DateTimeHelper.getCurrentTimeMillis()
                                 .toString(),
