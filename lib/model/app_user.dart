@@ -10,7 +10,7 @@ class AppUser {
       required this.email,
       required this.photoURL});
 
-  factory AppUser.fromMap(Map<dynamic, String> map) => AppUser(
+  factory AppUser.fromMap(Map<dynamic, dynamic> map) => AppUser(
         uid: map['uid'] ?? '',
         username: map['username'] ?? '',
         email: map['email'] ?? '',

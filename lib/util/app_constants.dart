@@ -12,4 +12,5 @@ class AppConstants {
   static const APP_USERS_KEY = 'AppUsers';
   static const TASKS_KEY = 'Tasks';
   static const COMMENTS_KEY = 'Comments';
+  static const USERNAME_KEY = 'username';
 }

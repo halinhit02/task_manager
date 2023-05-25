@@ -9,7 +9,12 @@ import '../model/task.dart';
 
 class DatabaseRepo {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
-  final AuthRepos _authRepos = AuthRepos();
+  static DatabaseRepo? _databaseRepo;
+
+  static DatabaseRepo instance() {
+    _databaseRepo ??= DatabaseRepo();
+    return _databaseRepo!;
+  }
 
   /// *
   ///  This function is used to save user information
@@ -21,20 +26,41 @@ class DatabaseRepo {
         .set(appUser.toMap());
   }
 
+  Future<AppUser?> getUserInfo() async {
+    try {
+      var appUser = await AuthRepos.instance().getCurrentUser();
+      if (appUser == null) {
+        return null;
+      }
+      var snapshot = await _database
+          .ref()
+          .child(AppConstants.APP_USERS_KEY)
+          .child(appUser.uid)
+          .get();
+      if (snapshot.exists && snapshot.value != null) {
+        return AppUser.fromMap(snapshot.value as Map);
+      }
+      return Future.error(AppConstants.errorOccurred);
+    } catch (e) {
+      print(e);
+      return Future.error(e);
+    }
+  }
+
   /// *
   ///  This function is used to update new user information
-  Future updateUserInfo(AppUser appUser) {
+  Future updateUserInfo(String uid, String username) {
     return _database
         .ref()
         .child(AppConstants.APP_USERS_KEY)
-        .child(appUser.uid)
-        .update(appUser.toMap());
+        .child(uid)
+        .update({AppConstants.USERNAME_KEY: username});
   }
 
   /// *
   ///  This function is used to add new task to database
   Future setTask(Task task) async {
-    var user = await _authRepos.getCurrentUser();
+    var user = await AuthRepos.instance().getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -52,7 +78,7 @@ class DatabaseRepo {
   ///  This function is used to get all task of one day
   ///  use DateTimeHelper.getCurrentDateMillis to get todayInMillis
   Future<List<Task>> getTasksByDate(int dayInMillis) async {
-    var user = await _authRepos.getCurrentUser();
+    var user = await AuthRepos.instance().getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -79,7 +105,7 @@ class DatabaseRepo {
   ///  This function is used to get information of a task
   ///  dayInMillis is task's created date in millis of time
   Future<Task> getTaskInfo(String taskId, int dayInMillis) async {
-    var user = await _authRepos.getCurrentUser();
+    var user = await AuthRepos.instance().getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -102,7 +128,7 @@ class DatabaseRepo {
   /// *
   ///  This function is used to update a task
   Future updateTask(Task task) async {
-    var user = await _authRepos.getCurrentUser();
+    var user = await AuthRepos.instance().getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -119,7 +145,7 @@ class DatabaseRepo {
   /// *
   ///  This function is used to remove a task
   Future deleteTask(Task task) async {
-    var user = await _authRepos.getCurrentUser();
+    var user = await AuthRepos.instance().getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -136,7 +162,7 @@ class DatabaseRepo {
   // *
   ///  This function is used to set a new task to database
   Future<void> setTaskComment(Comment comment, String taskId) async {
-    var user = await _authRepos.getCurrentUser();
+    var user = await AuthRepos.instance().getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -156,7 +182,7 @@ class DatabaseRepo {
   // *
   ///  This function is used to get list of task comment by task id
   Future<List<Comment>> getListTaskComment(String taskId) async {
-    var user = await _authRepos.getCurrentUser();
+    var user = await AuthRepos.instance().getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -186,7 +212,7 @@ class DatabaseRepo {
   // *
   ///  This function is used to remove a comment of task
   Future<void> deleteTaskComment(Comment comment, String taskId) async {
-    var user = await _authRepos.getCurrentUser();
+    var user = await AuthRepos.instance().getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }

@@ -6,6 +6,13 @@ import '../model/app_user.dart';
 
 class AuthRepos {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  static AuthRepos? _authRepos;
+
+  static AuthRepos instance() {
+   _authRepos ??= AuthRepos();
+    return _authRepos!;
+  }
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
@@ -107,7 +114,7 @@ class AuthRepos {
   }
 
   Future<void> signOut() async {
-    await _googleSignIn.signOut();
+    _googleSignIn.signOut();
     await _auth.signOut();
   }
 }
