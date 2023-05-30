@@ -18,6 +18,18 @@ class MyTaskDetailSheet extends StatefulWidget {
 
 class _MyTaskDetailSheetState extends State<MyTaskDetailSheet> {
   String comment = '';
+  List<Comment> listComment = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getListComment();
+  }
+
+  void _getListComment() async {
+    listComment =
+        await DatabaseRepo.instance.getListTaskComment(widget.task.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,14 +178,18 @@ class _MyTaskDetailSheetState extends State<MyTaskDetailSheet> {
                 const Expanded(child: SizedBox()),
                 IconButton(
                     onPressed: () {
-                      DatabaseRepo.instance.setTaskComment(
-                        Comment(
-                            id: DateTimeHelper.getCurrentTimeMillis()
-                                .toString(),
-                            content: comment,
-                            time: DateTime.now().millisecondsSinceEpoch),
-                        widget.task.id,
-                      );
+                      setState(() async {
+                        await DatabaseRepo.instance.setTaskComment(
+                          Comment(
+                              id: DateTimeHelper.getCurrentTimeMillis()
+                                  .toString(),
+                              content: comment,
+                              time: DateTime.now().millisecondsSinceEpoch),
+                          widget.task.id,
+                        );
+                        listComment = await DatabaseRepo.instance
+                            .getListTaskComment(widget.task.id);
+                      });
                     },
                     icon: const Icon(
                       Icons.send,
@@ -185,6 +201,16 @@ class _MyTaskDetailSheetState extends State<MyTaskDetailSheet> {
             Divider(
               thickness: 1,
             ),
+            Wrap(
+              direction: Axis.horizontal,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              children: List.generate(listComment.length, (index) {
+                return Container(
+                  padding: EdgeInsets.all(10),
+                  child: Text('${listComment[index].content}'),
+                );
+              }),
+            )
           ],
         ),
       ),

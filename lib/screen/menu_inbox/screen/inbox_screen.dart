@@ -106,7 +106,9 @@ class __BodyState extends State<_Body> {
         context: context,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return MyTaskDetailSheet(task: task,);
+          return MyTaskDetailSheet(
+            task: task,
+          );
         });
   }
 
@@ -165,7 +167,7 @@ class __BodyState extends State<_Body> {
                 const SizedBox(height: 10),
                 MaterialButton(
                   onPressed: () {
-                   _databaseRepo
+                    _databaseRepo
                         .setTask(Task(
                             id: DateTimeHelper.getCurrentTimeMillis()
                                 .toString(),
