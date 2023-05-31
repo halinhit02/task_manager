@@ -12,10 +12,10 @@ class Comment {
       this.type = CommentType.TEXT,
       required this.time});
 
-  factory Comment.fromMap(Map<String, dynamic> map) => Comment(
+  factory Comment.fromMap(Map<dynamic, dynamic> map) => Comment(
         id: map['id'] ?? '',
         content: map['content'] ?? '',
-        type: map['type'] ?? 0,
+        type: CommentType.values[map['type'] ?? 0],
         time: map['time'] ?? 0,
       );
 

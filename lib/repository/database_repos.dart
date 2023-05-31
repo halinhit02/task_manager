@@ -188,7 +188,6 @@ class DatabaseRepo {
     var userUid = user.uid;
     int todayTimeMillis =
         DateTimeHelper.getDateFromTimeMillis(int.parse(taskId));
-
     var commentList = <Comment>[];
     try {
       var snapshots = await _database
@@ -200,7 +199,7 @@ class DatabaseRepo {
           .get();
       for (var snapshot in snapshots.children) {
         commentList
-            .add(Comment.fromMap(snapshot.value as Map<String, dynamic>));
+            .add(Comment.fromMap(snapshot.value as Map));
       }
       return commentList;
     } catch (e) {
@@ -210,7 +209,7 @@ class DatabaseRepo {
 
   // *
   ///  This function is used to remove a comment of task
-  Future<void> deleteTaskComment(Comment comment, String taskId) async {
+  Future<void> deleteTaskComment(String commentId, String taskId) async {
     var user = await AuthRepos.instance().getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
@@ -224,7 +223,7 @@ class DatabaseRepo {
         .child(todayTimeMillis.toString())
         .child(taskId)
         .child(AppConstants.COMMENTS_KEY)
-        .child(comment.id)
+        .child(commentId)
         .remove();
   }
 }

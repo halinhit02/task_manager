@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
 import 'package:thuc_tap_chuyen_nganh/model/app_user.dart';
 import 'package:thuc_tap_chuyen_nganh/repository/auth_repos.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/create_task/screen/create_task_screen.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/create_task/create_task_screen.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/login/screen/login_screen.dart';
 import 'package:thuc_tap_chuyen_nganh/util/app_constants.dart';
 

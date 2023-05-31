@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
 
-import '../../../../helper/date_time_helper.dart';
 import '../../../../model/task.dart';
 import '../../../../repository/database_repos.dart';
-import '../../bloc/menu_homepage_bloc.dart';
 import 'date_time_sheet.dart';
 import 'package:intl/intl.dart';
 
 class CreateTaskSheet extends StatefulWidget {
-  const CreateTaskSheet({Key? key}) : super(key: key);
+  const CreateTaskSheet({Key? key, this.currentTask, this.isEdit = false})
+      : super(key: key);
+
+  final Task? currentTask;
+  final bool isEdit;
 
   @override
   State<CreateTaskSheet> createState() => _CreateTaskSheetState();
@@ -24,6 +25,17 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
 
   @override
   Widget build(BuildContext context) {
+    Task task = Task(
+        id: selectedDateTime.millisecondsSinceEpoch.toString(),
+        title: titleTextEditing.text,
+        description: descriptionTextEditing.text,
+        time: selectedDateTime.millisecondsSinceEpoch);
+    if (widget.isEdit) {
+      task = widget.currentTask!;
+      titleTextEditing.text = task.title;
+      descriptionTextEditing.text = task.description;
+      selectedDateTime = DateTime.fromMillisecondsSinceEpoch(task.time);
+    }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -37,7 +49,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
               border: OutlineInputBorder(borderSide: BorderSide.none),
             ),
             onChanged: (value) {
-              context.read<MenuHomepageBloc>().add(TitleEvent(value));
+              task.title = value;
             },
           ),
           TextField(
@@ -49,7 +61,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
               border: OutlineInputBorder(borderSide: BorderSide.none),
             ),
             onChanged: (value) {
-              context.read<MenuHomepageBloc>().add(DescriptionEvent(value));
+              task.description = value;
             },
           ),
           MaterialButton(
@@ -77,21 +89,15 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
           const SizedBox(height: 10),
           MaterialButton(
             onPressed: () {
-              if (titleTextEditing.text.isEmpty) {
+              if (task.title.isEmpty) {
                 Fluttertoast.showToast(msg: 'Input task\'s title.');
                 return;
-              } else if (descriptionTextEditing.text.isEmpty) {
+              } else if (task.description.isEmpty) {
                 Fluttertoast.showToast(msg: 'Input task\'s description.');
                 return;
               }
               DialogHelper.showLoadingDialog(context);
-              DatabaseRepo.instance
-                  .setTask(Task(
-                      id: selectedDateTime.millisecondsSinceEpoch.toString(),
-                      title: titleTextEditing.text,
-                      description: descriptionTextEditing.text,
-                      time: selectedDateTime.millisecondsSinceEpoch))
-                  .then((value) {
+              DatabaseRepo.instance.setTask(task).then((value) {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
                 DialogHelper.showSnackBar(context, 'New task is created.');
