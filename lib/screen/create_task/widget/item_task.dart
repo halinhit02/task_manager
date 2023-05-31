@@ -2,22 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/src/dropdown_button2.dart';
 import 'package:intl/intl.dart';
 import 'package:thuc_tap_chuyen_nganh/model/task.dart';
+import 'package:thuc_tap_chuyen_nganh/model/task_type.dart';
 
 import '../../../../helper/dialog_helper.dart';
-import 'show_dialog.dart';
+import 'create_task_sheet.dart';
 
 class ItemTask extends StatelessWidget {
-  final Function()? onClickEdit;
+  final Function() onRemoveClick;
   final Task task;
   final int index;
 
   const ItemTask(
-      {Key? key, required this.task, required this.index, this.onClickEdit})
+      {Key? key,
+      required this.task,
+      required this.index,
+      required this.onRemoveClick})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var dateTime = DateTime.fromMillisecondsSinceEpoch(task.time);
+
+    var taskColor = task.type == TaskType.Waiting
+        ? Theme.of(context).primaryColor
+        : task.type == TaskType.Running
+            ? Colors.orange
+            : task.type == TaskType.Canceled
+                ? Colors.red
+                : Colors.green;
+    Future showEditTaskSheet(Task currentTask) {
+      return showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 2 / 3,
+          ),
+          builder: (BuildContext context) => CreateTaskSheet(
+                currentTask: currentTask,
+                isEdit: true,
+              ));
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -31,9 +56,9 @@ class ItemTask extends StatelessWidget {
             children: [
               Container(
                 height: 40,
-                decoration: const BoxDecoration(
-                  color: Colors.teal,
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: taskColor,
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                   ),
@@ -70,8 +95,8 @@ class ItemTask extends StatelessWidget {
                         ...MenuItems.firstItems.map(
                           (item) => DropdownMenuItem<MenuItem>(
                             value: item,
-                            child: MenuItems.buildItem(
-                                item, item.text, context, onClickEdit),
+                            child: MenuItems.buildItem(item, item.text, context,
+                                () => showEditTaskSheet(task), onRemoveClick),
                           ),
                         ),
                       ],
@@ -79,21 +104,19 @@ class ItemTask extends StatelessWidget {
                         width: 160,
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Colors.teal,
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
                         ),
-                        elevation: 8,
+                        elevation: 0,
                         offset: const Offset(0, 8),
                       ),
-                      onChanged: (value) {
-
-                      },
+                      onChanged: (value) {},
                       menuItemStyleData: MenuItemStyleData(
                         customHeights: [
                           ...List<double>.filled(
                               MenuItems.firstItems.length, 48),
                         ],
-                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        padding: const EdgeInsets.only(left: 15, right: 15),
                       ),
                     ),
                   ],
@@ -106,17 +129,17 @@ class ItemTask extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                           border: Border.fromBorderSide(BorderSide(
                             width: 2,
-                            color: Colors.teal,
+                            color: taskColor,
                           )),
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(35),
                           )),
-                      child: const Icon(
+                      child: Icon(
                         Icons.circle_rounded,
-                        color: Colors.teal,
+                        color: taskColor,
                         size: 8,
                       ),
                     ),
@@ -138,7 +161,7 @@ class ItemTask extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            task.title,
+                            task.description,
                             style: const TextStyle(
                               fontSize: 14,
                             ),
@@ -159,18 +182,18 @@ class ItemTask extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  const Icon(
+                  Icon(
                     Icons.alarm_rounded,
                     size: 18,
-                    color: Colors.red,
+                    color: taskColor,
                   ),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
                     child: Text(
                       DateFormat(DateFormat.HOUR24_MINUTE).format(dateTime),
-                      style: const TextStyle(
-                        color: Colors.red,
+                      style: TextStyle(
+                        color: taskColor,
                       ),
                     ),
                   ),
@@ -178,7 +201,7 @@ class ItemTask extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        DateFormat(DateFormat.YEAR_MONTH_WEEKDAY_DAY)
+                        DateFormat(DateFormat.YEAR_NUM_MONTH_WEEKDAY_DAY)
                             .format(dateTime),
                         style: const TextStyle(color: Colors.black54),
                       ),
@@ -212,31 +235,26 @@ class MenuItems {
   static const share = MenuItem(text: 'Edit', icon: Icons.edit);
 
   static Widget buildItem(MenuItem item, String text, BuildContext context,
-      Function()? onclickEdit) {
+      Function() onEditClick, Function() onDeleteClick) {
     return GestureDetector(
       onTap: () {
+        Navigator.pop(context);
         if (item.text == home.text) {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return const ShowDialog();
-              });
+          DialogHelper.showAlertDialog(context,
+              'Do you want to remove this task?', () => onDeleteClick());
         }
         if (item.text == share.text) {
-          onclickEdit!();
+          onEditClick();
         }
       },
       child: Row(
         children: [
-          Icon(item.icon, color: Colors.white, size: 22),
+          Icon(item.icon, size: 22),
           const SizedBox(
             width: 10,
           ),
           Text(
             item.text,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
           ),
         ],
       ),

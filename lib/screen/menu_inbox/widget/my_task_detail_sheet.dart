@@ -125,7 +125,7 @@ class _MyTaskDetailSheetState extends State<MyTaskDetailSheet> {
                           width: 20,
                         ),
                         Text(
-                          DateFormat(DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY)
+                          DateFormat(DateFormat.YEAR_NUM_MONTH_WEEKDAY_DAY)
                               .format(dateTime),
                           style:
                               const TextStyle(color: Colors.red, fontSize: 16),

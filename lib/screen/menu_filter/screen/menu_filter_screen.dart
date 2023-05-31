@@ -1,8 +1,10 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../model/task.dart';
+import '../../../repository/database_repos.dart';
 import '../../create_task/widget/item_task.dart';
 import '../bloc/menu_filter_bloc.dart';
 
@@ -35,7 +37,7 @@ class _BodyState extends State<Body> {
     _onGetListTask();
   }
 
-  void _onGetListTask() {
+  Future _onGetListTask() async {
     context.read<MenuFilterBloc>().add(GetListTaskEvent());
   }
 
@@ -47,7 +49,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    _onGetListTask();
     return BlocConsumer<MenuFilterBloc, MenuFilterState>(
       listener: (context, state) => _handleListener(context, state),
       builder: (context, state) {
@@ -69,21 +70,43 @@ class _BodyState extends State<Body> {
               child: Column(
                 children: <Widget>[
                   DatePicker(
-                    DateTime.now(),
+                    DateTime.now().copyWith(day: 1),
                     initialSelectedDate: DateTime.now(),
                     selectionColor: Theme.of(context).primaryColor,
                     selectedTextColor: Colors.white,
                     onDateChange: (date) {
                       context.read<MenuFilterBloc>().add(UpdateTime(date));
+                      _onGetListTask();
                     },
                   ),
                   Expanded(
-                      child: ListView.builder(
-                    itemCount: listTask.length,
-                    itemBuilder: (_, index) => ItemTask(
-                      task: listTask[index],
-                      index: index,
-                    ), //ItemTask(),
+                      child: RefreshIndicator(
+                    onRefresh: () async {
+                      await _onGetListTask();
+                    },
+                    child: listTask.isEmpty
+                        ? const Center(
+                            child: Text('There are no data.'),
+                          )
+                        : ListView.builder(
+                            itemCount: listTask.length,
+                            itemBuilder: (_, index) => ItemTask(
+                              task: listTask[index],
+                              index: index,
+                              onRemoveClick: () {
+                                DatabaseRepo.instance
+                                    .deleteTask(
+                                  listTask[index],
+                                )
+                                    .then((value) {
+                                  Fluttertoast.showToast(
+                                      msg: 'Task is deleted.');
+                                }).catchError((e) {
+                                  Fluttertoast.showToast(msg: e.toString());
+                                });
+                              },
+                            ), //ItemTask(),
+                          ),
                   )),
                 ],
               ),

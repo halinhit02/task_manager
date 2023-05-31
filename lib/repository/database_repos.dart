@@ -38,7 +38,7 @@ class DatabaseRepo {
       if (snapshot.exists && snapshot.value != null) {
         return AppUser.fromMap(snapshot.value as Map);
       }
-      return Future.error(AppConstants.errorOccurred);
+      return null;
     } catch (e) {
       print(e);
       return Future.error(e);

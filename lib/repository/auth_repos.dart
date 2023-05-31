@@ -104,7 +104,7 @@ class AuthRepos {
     if (user != null) {
       var appUser = AppUser(
           uid: user.uid,
-          username: (user.email ?? '').replaceAll('@gmail.com', ''),
+          username: (user.email ?? '').split('@')[0],
           email: user.email ?? '',
           photoURL: user.photoURL ?? '');
       return appUser;

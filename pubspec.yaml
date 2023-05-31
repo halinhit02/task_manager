@@ -69,7 +69,7 @@ flutter:
   assets:
     - assets/logo.jpg
     - assets/ic_google.png
-    - assets/anh_phuong.jpg
+    - assets/avatar.png
     - assets/ic_app.png
   #   - images/a_dot_ham.jpeg
 

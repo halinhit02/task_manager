@@ -29,9 +29,11 @@ class _MyProfileState extends State<MyProfile> {
         ),
         centerTitle: true,
       ),
-      body: ColoredBox(
-        color: Colors.white,
-        child: Column(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {});
+        },
+        child: ListView(
           children: [
             const SizedBox(
               height: 10,
@@ -40,15 +42,16 @@ class _MyProfileState extends State<MyProfile> {
                 future: DatabaseRepo.instance.getUserInfo(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    DialogHelper.showSnackBar(context, snapshot.error.toString());
+                    DialogHelper.showSnackBar(
+                        context, snapshot.error.toString());
                   }
                   return Column(
                     children: [
                       Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(50),
-                          child: Image.network(
-                            'https://i.pravatar.cc/84',
+                          child: Image.asset(
+                            'assets/avatar.png',
                             width: 84,
                             height: 84,
                             fit: BoxFit.cover,
@@ -97,8 +100,8 @@ class _MyProfileState extends State<MyProfile> {
               title: 'Productivity',
               subIcon: Icons.navigate_next,
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => MyProductivity()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => MyProductivity()));
               },
             ),
             const SizedBox(

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         title: 'Task Manager',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: const Color(0xff17A1A1),
+          primaryColor: Colors.teal,
           primarySwatch: Colors.teal,
         ),
         home: BlocProvider(
