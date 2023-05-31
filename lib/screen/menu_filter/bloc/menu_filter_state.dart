@@ -5,3 +5,8 @@ class MenuFilterState {
 }
 
 class MenuFilterInitial extends MenuFilterState {}
+
+class GetListTaskSuccessState extends MenuFilterState {
+  List<Task> listTask;
+  GetListTaskSuccessState(this.listTask);
+}

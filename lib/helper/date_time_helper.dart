@@ -14,4 +14,8 @@ class DateTimeHelper {
     var dt = DateTime.fromMillisecondsSinceEpoch(timeMillis);
     return DateTime(dt.year, dt.month, dt.day).millisecondsSinceEpoch;
   }
+
+  static int getDateTime(DateTime date) {
+    return date.millisecondsSinceEpoch;
+  }
 }
