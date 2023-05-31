@@ -1,65 +1,119 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_calendar/clean_calendar_event.dart';
-import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../create_task/screen/widget/item_task.dart';
+import '../../../model/task.dart';
+import '../../../repository/database_repos.dart';
+import '../../create_task/widget/item_task.dart';
+import '../bloc/menu_filter_bloc.dart';
 
-class MyMenuFilter extends StatefulWidget {
+class MyMenuFilter extends StatelessWidget {
   const MyMenuFilter({Key? key}) : super(key: key);
 
   @override
-  State<MyMenuFilter> createState() => _MyMenuFilterState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => MenuFilterBloc(),
+      child: const Body(),
+    );
+  }
 }
 
-class _MyMenuFilterState extends State<MyMenuFilter> {
-  late DateTime selectedDay;
+class Body extends StatefulWidget {
+  const Body({Key? key}) : super(key: key);
 
-  void _handleData(date) {
-    setState(() {
-      selectedDay = date;
-    });
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  late List<Task> listTask;
+
+  @override
+  void initState() {
+    super.initState();
+    listTask = [];
+    _onGetListTask();
   }
 
-  final Map<DateTime, List<CleanCalendarEvent>>? events = {DateTime.now(): []};
+  Future _onGetListTask() async {
+    context.read<MenuFilterBloc>().add(GetListTaskEvent());
+  }
+
+  void _handleListener(BuildContext context, MenuFilterState state) {
+    if (state is GetListTaskSuccessState) {
+      listTask = state.listTask;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        title: const Text(
-          'Schedule',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: SafeArea(
-        child: ColoredBox(
-          color: Colors.white,
-          child: Column(
-            children: <Widget>[
-              DatePicker(
-                DateTime.now(),
-                initialSelectedDate: DateTime.now(),
-                selectionColor: Theme.of(context).primaryColor,
-                selectedTextColor: Colors.white,
-                onDateChange: (date) {
-                  // New date selected
-                },
+    return BlocConsumer<MenuFilterBloc, MenuFilterState>(
+      listener: (context, state) => _handleListener(context, state),
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.white,
+            title: const Text(
+              'Schedule',
+              style: TextStyle(
+                color: Colors.black,
               ),
-              Expanded(
-                  child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (_, index) => ItemTask(),
-              )),
-            ],
+            ),
+            centerTitle: true,
           ),
-        ),
-      ),
+          body: SafeArea(
+            child: ColoredBox(
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  DatePicker(
+                    DateTime.now().copyWith(day: 1),
+                    initialSelectedDate: DateTime.now(),
+                    selectionColor: Theme.of(context).primaryColor,
+                    selectedTextColor: Colors.white,
+                    onDateChange: (date) {
+                      context.read<MenuFilterBloc>().add(UpdateTime(date));
+                      _onGetListTask();
+                    },
+                  ),
+                  Expanded(
+                      child: RefreshIndicator(
+                    onRefresh: () async {
+                      await _onGetListTask();
+                    },
+                    child: listTask.isEmpty
+                        ? const Center(
+                            child: Text('There are no data.'),
+                          )
+                        : ListView.builder(
+                            itemCount: listTask.length,
+                            itemBuilder: (_, index) => ItemTask(
+                              task: listTask[index],
+                              index: index,
+                              onRemoveClick: () {
+                                DatabaseRepo.instance
+                                    .deleteTask(
+                                  listTask[index],
+                                )
+                                    .then((value) {
+                                  Fluttertoast.showToast(
+                                      msg: 'Task is deleted.');
+                                }).catchError((e) {
+                                  Fluttertoast.showToast(msg: e.toString());
+                                });
+                              },
+                            ), //ItemTask(),
+                          ),
+                  )),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

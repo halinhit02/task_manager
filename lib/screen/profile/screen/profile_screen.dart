@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
+import 'package:thuc_tap_chuyen_nganh/model/app_user.dart';
+import 'package:thuc_tap_chuyen_nganh/repository/auth_repos.dart';
+import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/login/bloc/login_bloc.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/login/screen/login_screen.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/edit_profile.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/productivity_screen.dart';
 
@@ -22,43 +29,57 @@ class _MyProfileState extends State<MyProfile> {
         ),
         centerTitle: true,
       ),
-      body: ColoredBox(
-        color: Colors.white,
-        child: Column(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {});
+        },
+        child: ListView(
           children: [
             const SizedBox(
               height: 10,
             ),
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.network(
-                  'https://i.pravatar.cc/84',
-                  width: 84,
-                  height: 84,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Hà Linh',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              'admin@halinhit.com',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey),
-            ),
+            FutureBuilder<AppUser?>(
+                future: DatabaseRepo.instance.getUserInfo(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    DialogHelper.showSnackBar(
+                        context, snapshot.error.toString());
+                  }
+                  return Column(
+                    children: [
+                      Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.asset(
+                            'assets/avatar.png',
+                            width: 84,
+                            height: 84,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        snapshot.data?.username ?? '',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        snapshot.data?.email ?? '',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  );
+                }),
             const SizedBox(
               height: 15,
             ),
@@ -79,8 +100,8 @@ class _MyProfileState extends State<MyProfile> {
               title: 'Productivity',
               subIcon: Icons.navigate_next,
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => MyProductivity()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => MyProductivity()));
               },
             ),
             const SizedBox(
@@ -122,9 +143,14 @@ class _MyProfileState extends State<MyProfile> {
               icon: Icons.logout,
               title: 'Log Out',
               subIcon: Icons.navigate_next,
-              onTap: () {
-                Navigator.of(context).pop();
-              },
+              onTap: () => AuthRepos.instance().signOut().then(
+                    (value) => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (_) => BlocProvider(
+                              create: (context) => LoginBloc(),
+                              child: const LoginScreen())),
+                    ),
+                  ),
             ),
           ],
         ),

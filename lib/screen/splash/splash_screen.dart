@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:thuc_tap_chuyen_nganh/repository/auth_repos.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/home/home_screen.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/login/screen/login_screen.dart';
-import 'package:thuc_tap_chuyen_nganh/utils/app_constants.dart';
 
-import '../login/bloc/login_bloc.dart';
+import '../../util/app_constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -13,20 +13,29 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     super.didChangeDependencies();
-    Future.delayed(
-      const Duration(seconds: 1),
-          () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => LoginBloc(),
-            child: const LoginScreen(),),
+    var result = await AuthRepos.instance().isAuthenticated();
+    if (result) {
+      Future.delayed(
+        const Duration(milliseconds: 500),
+        () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => const HomeScreen(),
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      Future.delayed(
+        const Duration(milliseconds: 500),
+        () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => const LoginScreen(),
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -54,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     color: Colors.white),
               ),
             ),
-            Text(
+            const Text(
               'The best to do list application for you',
               style: TextStyle(color: Colors.white),
             ),
