@@ -5,7 +5,6 @@ import 'package:thuc_tap_chuyen_nganh/screen/login/bloc/login_bloc.dart';
 
 import '../../../helper/dialog_helper.dart';
 import '../../../repository/auth_repos.dart';
-import '../../../repository/database_repos.dart';
 import '../../../util/app_constants.dart';
 import '../../home/home_screen.dart';
 
@@ -36,16 +35,10 @@ class _BodyState extends State<_Body> {
 
   void _onSignIn() {
     DialogHelper.showLoadingDialog(context);
-    AuthRepos().signInWithEmailPassword(email, password).then((value) {
+    AuthRepos.instance.signInWithEmailPassword(email, password).then((value) {
       if (value != null) {
-        DatabaseRepo.instance.setUserInfo(value).then((value) {
-          Navigator.of(context).pop();
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (_) => const HomeScreen()));
-        }).catchError((e) {
-          Navigator.of(context).pop();
-          DialogHelper.showSnackBar(context, e.toString(), isError: true);
-        });
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => const HomeScreen()));
       }
     }).catchError((e) {
       Navigator.of(context).pop();
@@ -55,10 +48,10 @@ class _BodyState extends State<_Body> {
 
   void _hanldeListener(BuildContext context, LoginState state) {
     if (state is ValidateEmailSignInState) {
-      errorEmail = 'Không để trống trường này';
+      errorEmail = 'This field is not empty';
     }
     if (state is ValidatePasswordSignInState) {
-      errorPassword = 'Không để trống trường này';
+      errorPassword = 'This field is not empty';
     }
     if (state.showDialogConfirmSignIn) {
       _onSignIn();

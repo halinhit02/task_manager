@@ -2,21 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class MyChart extends StatefulWidget {
-  const MyChart({Key? key}) : super(key: key);
+class MyChart extends StatelessWidget {
+  const MyChart({Key? key, required this.chartDatas}) : super(key: key);
 
-  @override
-  State<MyChart> createState() => _MyChartState();
-}
-
-class _MyChartState extends State<MyChart> {
-  final List<ChartData> chartData = [
-    ChartData('Mar', 20, 30, 40, 50),
-    ChartData('May', 40, 20, 60, 50),
-    ChartData('Jun', 18, 28, 50, 30),
-    ChartData('Jul', 20, 10, 10, 50),
-    ChartData('Aug', 30, 20, 40, 20)
-  ];
+  final List<ChartData> chartDatas;
 
   @override
   Widget build(BuildContext context) {
@@ -31,17 +20,10 @@ class _MyChartState extends State<MyChart> {
         primaryXAxis: CategoryAxis(),
         series: <ChartSeries>[
           StackedColumnSeries<ChartData, String>(
-              dataSource: chartData,
+              color: Theme.of(context).primaryColor,
+              dataSource: chartDatas,
               xValueMapper: (ChartData ch, _) => ch.x,
-              yValueMapper: (ChartData ch, _) => ch.y1,),
-          StackedColumnSeries<ChartData, String>(
-              dataSource: chartData,
-              xValueMapper: (ChartData ch, _) => ch.x,
-              yValueMapper: (ChartData ch, _) => ch.y2),
-          StackedColumnSeries<ChartData, String>(
-              dataSource: chartData,
-              xValueMapper: (ChartData ch, _) => ch.x,
-              yValueMapper: (ChartData ch, _) => ch.y3)
+              yValueMapper: (ChartData ch, _) => ch.y1),
         ],
       ),
     );

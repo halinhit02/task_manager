@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
 import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/change_password_dialog.dart';
 
 import '../../../../model/app_user.dart';
 import '../../../../repository/auth_repos.dart';
@@ -38,7 +39,7 @@ class _MyEditProfileState extends State<MyEditProfile> {
         centerTitle: true,
       ),
       body: FutureBuilder<AppUser?>(
-          future: AuthRepos.instance().getCurrentUser(),
+          future: DatabaseRepo.instance.getUserInfo(),
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return const Center(
@@ -46,7 +47,12 @@ class _MyEditProfileState extends State<MyEditProfile> {
               );
             }
             if (snapshot.hasError) {
-              DialogHelper.showSnackBar(context, snapshot.error.toString());
+              return Center(
+                child: Text(
+                  snapshot.error.toString(),
+                  style: const TextStyle(fontSize: 14),
+                ),
+              );
             }
             usernameController.text =
                 snapshot.data?.username ?? 'Your username';
@@ -115,7 +121,11 @@ class _MyEditProfileState extends State<MyEditProfile> {
                         height: 10,
                       ),
                       MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => ChangePasswordDialog());
+                        },
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
                         shape: RoundedRectangleBorder(

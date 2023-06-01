@@ -168,27 +168,24 @@ class _MyTaskDetailSheetState extends State<MyTaskDetailSheet> {
           const Divider(
             thickness: 1,
           ),
-          TextField(
-            autofocus: true,
-            focusNode: focusNode,
-            controller: commentTextController,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 15),
-              hintText: 'Enter your comment...',
-              border: OutlineInputBorder(borderSide: BorderSide.none),
-            ),
-            onSubmitted: (value) {},
-          ),
           Row(
             children: [
-              IconButton(
-                  onPressed: () {
-                    _showDialogTimeWorkDetail();
-                  },
-                  icon: const Icon(
-                    Icons.link,
-                  )),
-              const Expanded(child: SizedBox()),
+              Expanded(
+                child: TextField(
+                  autofocus: true,
+                  focusNode: focusNode,
+                  textInputAction: TextInputAction.newline,
+                  controller: commentTextController,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    hintText: 'Enter your comment...',
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                  ),
+                  maxLines: 5,
+                  minLines: 1,
+                  onSubmitted: (value) {},
+                ),
+              ),
               IconButton(
                   onPressed: () async {
                     if (commentTextController.text.isEmpty) {

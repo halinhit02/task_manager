@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    var result = await AuthRepos.instance().isAuthenticated();
+    var result = await AuthRepos.instance.isAuthenticated();
     if (result) {
       Future.delayed(
         const Duration(milliseconds: 500),

@@ -18,13 +18,7 @@ class Task {
         id: map['id'] ?? '',
         title: map['title'] ?? '',
         description: map['description'] ?? '',
-        type: map['type'] == 0
-            ? TaskType.Waiting
-            : map['type'] == 1
-                ? TaskType.Running
-                : map['type'] == 2
-                    ? TaskType.Finished
-                    : TaskType.Finished,
+        type: TaskType.values[map['type'] ?? 0],
         time: map['time'] ?? 0,
       );
 
