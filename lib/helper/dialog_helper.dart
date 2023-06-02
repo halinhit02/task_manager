@@ -6,11 +6,8 @@ class DialogHelper {
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (_) => const Dialog(
-              backgroundColor: Colors.transparent,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+        builder: (_) => const Center(
+              child: CircularProgressIndicator(),
             ));
   }
 

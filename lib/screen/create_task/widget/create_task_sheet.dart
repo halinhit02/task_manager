@@ -129,6 +129,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                   selectedValue = value;
                   task.type = value;
                 }
+                print(value);
                 setState(() {
                 });
               },

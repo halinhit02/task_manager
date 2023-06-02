@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
 import 'package:thuc_tap_chuyen_nganh/model/app_user.dart';
 import 'package:thuc_tap_chuyen_nganh/repository/auth_repos.dart';
 import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/login/bloc/login_bloc.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/login/screen/login_screen.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/edit_profile.dart';
+import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/help_center.dart';
 import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/productivity_screen.dart';
 
 class MyProfile extends StatefulWidget {
@@ -41,21 +41,37 @@ class _MyProfileState extends State<MyProfile> {
             FutureBuilder<AppUser?>(
                 future: DatabaseRepo.instance.getUserInfo(),
                 builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
                   if (snapshot.hasError) {
-                    DialogHelper.showSnackBar(
-                        context, snapshot.error.toString());
+                    return Center(
+                      child: Text(
+                        snapshot.error.toString(),
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    );
                   }
                   return Column(
                     children: [
                       Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(50),
-                          child: Image.asset(
-                            'assets/avatar.png',
-                            width: 84,
-                            height: 84,
-                            fit: BoxFit.cover,
-                          ),
+                          child: snapshot.data!.photoURL.isEmpty
+                              ? Image.asset(
+                                  'assets/avatar.png',
+                                  width: 84,
+                                  height: 84,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.network(
+                                  snapshot.data!.photoURL,
+                                  width: 84,
+                                  height: 84,
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                       const SizedBox(
@@ -101,7 +117,7 @@ class _MyProfileState extends State<MyProfile> {
               subIcon: Icons.navigate_next,
               onTap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => MyProductivity()));
+                    MaterialPageRoute(builder: (_) => const MyProductivity()));
               },
             ),
             const SizedBox(
@@ -134,7 +150,10 @@ class _MyProfileState extends State<MyProfile> {
               icon: Icons.help_center_outlined,
               title: 'Help Center',
               subIcon: Icons.navigate_next,
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const HelpCenterScreen()));
+              },
             ),
             const SizedBox(
               height: 5,
@@ -143,7 +162,7 @@ class _MyProfileState extends State<MyProfile> {
               icon: Icons.logout,
               title: 'Log Out',
               subIcon: Icons.navigate_next,
-              onTap: () => AuthRepos.instance().signOut().then(
+              onTap: () => AuthRepos.instance.signOut().then(
                     (value) => Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                           builder: (_) => BlocProvider(

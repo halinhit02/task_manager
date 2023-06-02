@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
               onPressed: () {
-                AuthRepos().signOut();
+                AuthRepos.instance.signOut();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => const CreateAccountScreen()));
               },
@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               onPressed: () {
                 DialogHelper.showLoadingDialog(context);
-                AuthRepos().signInWithGoogle().then((value) {
+                AuthRepos.instance.signInWithGoogle().then((value) {
                   if (value != null) {
                     DatabaseRepo.instance.setUserInfo(value).then((value) {
                       Navigator.pop(context);

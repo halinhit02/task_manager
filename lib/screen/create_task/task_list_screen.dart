@@ -58,16 +58,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                         ),
                         child: Column(
                           children: [
-                            Container(
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                color: Colors.teal,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                ),
-                              ),
-                            ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 20),
