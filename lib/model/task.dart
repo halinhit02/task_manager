@@ -1,4 +1,4 @@
-import 'package:thuc_tap_chuyen_nganh/model/task_type.dart';
+import 'package:task_manager/model/task_type.dart';
 
 class Task {
   String id; // id = DateTime.now().millisecondsSinceEpoch

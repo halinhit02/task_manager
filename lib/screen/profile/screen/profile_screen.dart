@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/model/app_user.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/auth_repos.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/login/bloc/login_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/login/screen/login_screen.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/edit_profile.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/help_center.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/productivity_screen.dart';
+import 'package:task_manager/model/app_user.dart';
+import 'package:task_manager/repository/auth_repos.dart';
+import 'package:task_manager/repository/database_repos.dart';
+import 'package:task_manager/screen/login/bloc/login_bloc.dart';
+import 'package:task_manager/screen/login/screen/login_screen.dart';
+import 'package:task_manager/screen/profile/screen/widget/edit_profile.dart';
+import 'package:task_manager/screen/profile/screen/widget/help_center.dart';
+import 'package:task_manager/screen/profile/screen/widget/productivity_screen.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thuc_tap_chuyen_nganh/util/app_constants.dart';
+import 'package:task_manager/util/app_constants.dart';
 
 class HelpCenterScreen extends StatefulWidget {
   const HelpCenterScreen({Key? key}) : super(key: key);

@@ -1,4 +1,5 @@
-import 'package:thuc_tap_chuyen_nganh/model/comment_type.dart';
+
+import 'comment_type.dart';
 
 class Comment {
   String id;

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/login/bloc/login_bloc.dart';
+import 'package:task_manager/screen/login/bloc/login_bloc.dart';
 
 import '../../../helper/dialog_helper.dart';
 import '../../../repository/auth_repos.dart';

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/date_time_helper.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
-import 'package:thuc_tap_chuyen_nganh/model/comment.dart';
-import 'package:thuc_tap_chuyen_nganh/model/task.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
+import 'package:task_manager/helper/date_time_helper.dart';
+import 'package:task_manager/helper/dialog_helper.dart';
+import 'package:task_manager/model/comment.dart';
+import 'package:task_manager/model/task.dart';
+import 'package:task_manager/repository/database_repos.dart';
 
 import 'dialog_widget.dart';
 

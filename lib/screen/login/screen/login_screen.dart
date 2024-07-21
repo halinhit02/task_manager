@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
+import 'package:task_manager/helper/dialog_helper.dart';
+import 'package:task_manager/repository/database_repos.dart';
 
-import '../../../model/app_user.dart';
 import '../../../repository/auth_repos.dart';
 import '../../../util/app_constants.dart';
 import '../../home/home_screen.dart';

@@ -1,9 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/date_time_helper.dart';
-import 'package:thuc_tap_chuyen_nganh/model/app_user.dart';
-import 'package:thuc_tap_chuyen_nganh/model/comment.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/auth_repos.dart';
-import 'package:thuc_tap_chuyen_nganh/util/app_constants.dart';
+import 'package:task_manager/helper/date_time_helper.dart';
+import 'package:task_manager/model/app_user.dart';
+import 'package:task_manager/model/comment.dart';
+import 'package:task_manager/repository/auth_repos.dart';
+import 'package:task_manager/util/app_constants.dart';
 
 import '../model/task.dart';
 

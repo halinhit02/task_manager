@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/profile/screen/widget/change_password_dialog.dart';
+import 'package:task_manager/helper/dialog_helper.dart';
+import 'package:task_manager/repository/database_repos.dart';
+import 'package:task_manager/screen/profile/screen/widget/change_password_dialog.dart';
 
 import '../../../../model/app_user.dart';
 import '../../../../repository/auth_repos.dart';

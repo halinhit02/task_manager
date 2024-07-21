@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/menu_inbox/widget/my_task_detail_sheet.dart';
+import 'package:task_manager/screen/menu_inbox/widget/my_task_detail_sheet.dart';
 
 import '../../model/task.dart';
 import '../../repository/database_repos.dart';
-import '../create_task/widget/create_task_sheet.dart';
 import '../create_task/widget/item_task.dart';
 
 class MenuInboxScreen extends StatefulWidget {
@@ -47,8 +46,30 @@ class _MenuInboxScreenState extends State<MenuInboxScreen> {
                 );
               }
               if (snapshot.hasData && snapshot.data!.isEmpty) {
-                return const Center(
-                  child: Text('There are no data.'),
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('There are no data.'),
+                    MaterialButton(
+                      onPressed: () {
+                        setState(() {});
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(Icons.refresh_rounded),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text('Refresh'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               }
               var taskList = snapshot.data ?? [];

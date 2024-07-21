@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/auth_repos.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/home/home_screen.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/login/screen/login_screen.dart';
+import 'package:task_manager/repository/auth_repos.dart';
+import 'package:task_manager/screen/home/home_screen.dart';
+import 'package:task_manager/screen/login/screen/login_screen.dart';
 
 import '../../util/app_constants.dart';
 

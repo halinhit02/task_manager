@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:thuc_tap_chuyen_nganh/model/task.dart';
-import 'package:thuc_tap_chuyen_nganh/model/task_type.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
+import 'package:task_manager/model/task.dart';
+import 'package:task_manager/model/task_type.dart';
+import 'package:task_manager/repository/database_repos.dart';
 
 import '../../../../helper/dialog_helper.dart';
 import '../../../../model/app_user.dart';
@@ -211,11 +211,11 @@ class _MyProductivityState extends State<MyProductivity> {
                                   ),
                                 );
                               }
-                              var finishTaskCount = snapshot.data
+                              int finishTaskCount = snapshot.data
                                   ?.where((element) =>
                                       element.type == TaskType.Finished ||
                                       element.type == TaskType.Canceled)
-                                  .length;
+                                  .length ?? 0;
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -269,7 +269,7 @@ class _MyProductivityState extends State<MyProductivity> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
+                                  SizedBox(
                                     height: 300,
                                     child: MyChart(
                                       chartDatas: [
@@ -279,10 +279,10 @@ class _MyProductivityState extends State<MyProductivity> {
                                         ChartData('May', 35, 0, 0, 0),
                                         ChartData(
                                             'Jun',
-                                            (finishTaskCount! /
+                                            snapshot.data!.isNotEmpty ? (finishTaskCount /
                                                     snapshot.data!.length *
                                                     100)
-                                                .round(),
+                                                .round() : 0,
                                             0,
                                             0,
                                             0)

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:thuc_tap_chuyen_nganh/util/app_constants.dart';
+import 'package:task_manager/util/app_constants.dart';
 
 import '../model/app_user.dart';
 
