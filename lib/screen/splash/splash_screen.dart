@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/auth_repos.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/home/home_screen.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/login/screen/login_screen.dart';
+import 'package:task_manager/repository/auth_repos.dart';
+import 'package:task_manager/screen/home/home_screen.dart';
+import 'package:task_manager/screen/login/screen/login_screen.dart';
 
 import '../../util/app_constants.dart';
 
@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-    var result = await AuthRepos.instance().isAuthenticated();
+    var result = await AuthRepos.instance.isAuthenticated();
     if (result) {
       Future.delayed(
         const Duration(milliseconds: 500),

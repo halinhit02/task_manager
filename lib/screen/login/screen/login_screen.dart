@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
+import 'package:task_manager/helper/dialog_helper.dart';
+import 'package:task_manager/repository/database_repos.dart';
 
-import '../../../model/app_user.dart';
 import '../../../repository/auth_repos.dart';
 import '../../../util/app_constants.dart';
 import '../../home/home_screen.dart';
@@ -62,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
               onPressed: () {
-                AuthRepos().signOut();
+                AuthRepos.instance.signOut();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => const CreateAccountScreen()));
               },
@@ -156,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               onPressed: () {
                 DialogHelper.showLoadingDialog(context);
-                AuthRepos().signInWithGoogle().then((value) {
+                AuthRepos.instance.signInWithGoogle().then((value) {
                   if (value != null) {
                     DatabaseRepo.instance.setUserInfo(value).then((value) {
                       Navigator.pop(context);

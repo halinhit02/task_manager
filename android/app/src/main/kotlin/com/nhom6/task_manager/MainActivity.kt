@@ -1,4 +1,4 @@
-package com.nhom6.task_manager
+package com.halinhit.task_manager
 
 import io.flutter.embedding.android.FlutterActivity
 

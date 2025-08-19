@@ -1,9 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/date_time_helper.dart';
-import 'package:thuc_tap_chuyen_nganh/model/app_user.dart';
-import 'package:thuc_tap_chuyen_nganh/model/comment.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/auth_repos.dart';
-import 'package:thuc_tap_chuyen_nganh/util/app_constants.dart';
+import 'package:task_manager/helper/date_time_helper.dart';
+import 'package:task_manager/model/app_user.dart';
+import 'package:task_manager/model/comment.dart';
+import 'package:task_manager/repository/auth_repos.dart';
+import 'package:task_manager/util/app_constants.dart';
 
 import '../model/task.dart';
 
@@ -26,7 +26,7 @@ class DatabaseRepo {
 
   Future<AppUser?> getUserInfo() async {
     try {
-      var appUser = await AuthRepos.instance().getCurrentUser();
+      var appUser = await AuthRepos.instance.getCurrentUser();
       if (appUser == null) {
         return null;
       }
@@ -58,7 +58,7 @@ class DatabaseRepo {
   /// *
   ///  This function is used to add new task to database
   Future setTask(Task task) async {
-    var user = await AuthRepos.instance().getCurrentUser();
+    var user = await AuthRepos.instance.getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -76,7 +76,7 @@ class DatabaseRepo {
   ///  This function is used to get all task of one day
   ///  use DateTimeHelper.getCurrentDateMillis to get todayInMillis
   Future<List<Task>> getTasksByDate(int dayInMillis) async {
-    var user = await AuthRepos.instance().getCurrentUser();
+    var user = await AuthRepos.instance.getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -104,7 +104,7 @@ class DatabaseRepo {
   ///  This function is used to get information of a task
   ///  dayInMillis is task's created date in millis of time
   Future<Task> getTaskInfo(String taskId, int dayInMillis) async {
-    var user = await AuthRepos.instance().getCurrentUser();
+    var user = await AuthRepos.instance.getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -127,7 +127,7 @@ class DatabaseRepo {
   /// *
   ///  This function is used to update a task
   Future updateTask(Task task) async {
-    var user = await AuthRepos.instance().getCurrentUser();
+    var user = await AuthRepos.instance.getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -144,7 +144,7 @@ class DatabaseRepo {
   /// *
   ///  This function is used to remove a task
   Future deleteTask(Task task) async {
-    var user = await AuthRepos.instance().getCurrentUser();
+    var user = await AuthRepos.instance.getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -161,7 +161,7 @@ class DatabaseRepo {
   // *
   ///  This function is used to set a new task to database
   Future<void> setTaskComment(Comment comment, String taskId) async {
-    var user = await AuthRepos.instance().getCurrentUser();
+    var user = await AuthRepos.instance.getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -181,7 +181,7 @@ class DatabaseRepo {
   // *
   ///  This function is used to get list of task comment by task id
   Future<List<Comment>> getListTaskComment(String taskId) async {
-    var user = await AuthRepos.instance().getCurrentUser();
+    var user = await AuthRepos.instance.getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }
@@ -210,7 +210,7 @@ class DatabaseRepo {
   // *
   ///  This function is used to remove a comment of task
   Future<void> deleteTaskComment(String commentId, String taskId) async {
-    var user = await AuthRepos.instance().getCurrentUser();
+    var user = await AuthRepos.instance.getCurrentUser();
     if (user == null) {
       return Future.error('You need login to use this function.');
     }

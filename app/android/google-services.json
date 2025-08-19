@@ -3,7 +3,7 @@
     "project_number": "404910094346",
     "firebase_url": "https://taskmanager-9e2b9-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "taskmanager-9e2b9",
-    "storage_bucket": "taskmanager-9e2b9.firebasestorage.app"
+    "storage_bucket": "taskmanager-9e2b9.appspot.com"
   },
   "client": [
     {
@@ -14,38 +14,6 @@
         }
       },
       "oauth_client": [
-        {
-          "client_id": "404910094346-65m7b9j7uqec125skdv4o0bklk939gsv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.halinhit.task_manager",
-            "certificate_hash": "82eada839ce6370261500288f2af8f4f57d3af83"
-          }
-        },
-        {
-          "client_id": "404910094346-n481irggponatv9udq4cosindl24j6ae.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.halinhit.task_manager",
-            "certificate_hash": "71336d2891b525365d1734f66c5aade614f4065f"
-          }
-        },
-        {
-          "client_id": "404910094346-neaobq86kcfhr47agk21bsmgnt4gqse6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.halinhit.task_manager",
-            "certificate_hash": "6f7bfd79f8f0ac46c3aa618deb046d50bd32041e"
-          }
-        },
-        {
-          "client_id": "404910094346-r5tn920s2trqd7v9j7podujt6p22ndk2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.halinhit.task_manager",
-            "certificate_hash": "dff384417e729c87bfa4a5ce903ca049936f57e3"
-          }
-        },
         {
           "client_id": "404910094346-mqk0ockeljok22l7mhf9ol43tf1fqv1l.apps.googleusercontent.com",
           "client_type": 3

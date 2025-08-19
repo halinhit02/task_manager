@@ -1,20 +1,23 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/firebase_options.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/login/bloc/login_bloc.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/splash/splash_screen.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:task_manager/firebase_options.dart';
+import 'package:task_manager/screen/login/bloc/login_bloc.dart';
+import 'package:task_manager/screen/splash/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  MobileAds.instance.initialize();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -1,5 +1,3 @@
-import 'package:flutter/src/material/time.dart';
-
 class DateTimeHelper {
   static int getCurrentTimeMillis() {
     return DateTime.now().millisecondsSinceEpoch;

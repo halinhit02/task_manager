@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AppConstants {
   static const APPNAME = 'TaskManger';
 
@@ -6,7 +8,17 @@ class AppConstants {
   static const emailNotValid = 'The email address is not valid.';
   static const maintainMode = 'The app is under maintenance.';
   static const wrongEmailOrPass = 'Enter the wrong email or password.';
-  static const errorOccurred = 'Error! An error occurred. Please try again later';
+  static const errorOccurred =
+      'Error! An error occurred. Please try again later';
+
+  static const helpCenter = [
+    ['Platform are used', Icons.phonelink_rounded],
+    ['Usage question', Icons.question_answer_rounded],
+    ['Application usage', Icons.apps_rounded],
+    ['Update time app', Icons.access_time_filled_rounded],
+    ['Cross platform app', Icons.smartphone_rounded],
+    ['Update reminder', Icons.timer_rounded]
+  ];
 
   //Firebase key
   static const APP_USERS_KEY = 'AppUsers';

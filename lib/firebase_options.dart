@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,35 +49,25 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA9z6mDSh9VcKwYfveS5ReiDQQiQg2e6Mc',
-    appId: '1:404910094346:web:d2e1ec61f8ba6d56e447f3',
-    messagingSenderId: '404910094346',
-    projectId: 'taskmanager-9e2b9',
-    authDomain: 'taskmanager-9e2b9.firebaseapp.com',
-    databaseURL: 'https://taskmanager-9e2b9-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'taskmanager-9e2b9.appspot.com',
-    measurementId: 'G-9Q6RL654JC',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCjeictc-jP28xvYKeDGuvJ0i_ia0uWhlo',
-    appId: '1:404910094346:android:a958709e3ef62b0ce447f3',
+    appId: '1:404910094346:android:5d9445a176f95968e447f3',
     messagingSenderId: '404910094346',
     projectId: 'taskmanager-9e2b9',
     databaseURL: 'https://taskmanager-9e2b9-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'taskmanager-9e2b9.appspot.com',
+    storageBucket: 'taskmanager-9e2b9.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAIjmA6_6_YsuNbBkr-LKk1SggKjiwCb30',
-    appId: '1:404910094346:ios:92d20c68d9d6a64fe447f3',
+    appId: '1:404910094346:ios:75c60a938ec5d71be447f3',
     messagingSenderId: '404910094346',
     projectId: 'taskmanager-9e2b9',
     databaseURL: 'https://taskmanager-9e2b9-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'taskmanager-9e2b9.appspot.com',
-    androidClientId: '404910094346-5qmmlvvnj2d3lu1k1ijpm402apsq6i1k.apps.googleusercontent.com',
-    iosClientId: '404910094346-04usrn9in3ifj8lasl23jj4sno80hr0c.apps.googleusercontent.com',
-    iosBundleId: 'com.nhom6.taskManager',
+    storageBucket: 'taskmanager-9e2b9.firebasestorage.app',
+    androidClientId: '404910094346-1ns6phkcah0benukc2l9hupvkcaj51bu.apps.googleusercontent.com',
+    iosClientId: '404910094346-ua12fptab857br2smalic2k5fbougp2c.apps.googleusercontent.com',
+    iosBundleId: 'com.halinhit.taskManager',
   );
+
 }

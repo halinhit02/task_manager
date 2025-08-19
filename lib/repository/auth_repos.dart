@@ -1,24 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:thuc_tap_chuyen_nganh/util/app_constants.dart';
+import 'package:task_manager/util/app_constants.dart';
 
 import '../model/app_user.dart';
 
 class AuthRepos {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  static AuthRepos? _authRepos;
 
-  static AuthRepos instance() {
-   _authRepos ??= AuthRepos();
-    return _authRepos!;
-  }
+  AuthRepos._();
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
-  );
+  static final instance = AuthRepos._();
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
   Future<bool> isAuthenticated() async {
     return _auth.currentUser != null;
@@ -31,12 +24,16 @@ class AuthRepos {
 
   Future<AppUser?> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleAccount = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication? googleAuthentication =
-          await googleAccount?.authentication;
+      if (!GoogleSignIn.instance.supportsAuthenticate()) {
+        return null;
+      }
+      final GoogleSignInAccount googleAccount =
+          await GoogleSignIn.instance.authenticate();
+
+      final GoogleSignInAuthentication googleAuthentication =
+          googleAccount.authentication;
       final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuthentication?.accessToken,
-        idToken: googleAuthentication?.idToken,
+        idToken: googleAuthentication.idToken,
       );
       var userCredential = await _auth.signInWithCredential(credential);
       return getAppUser(userCredential.user);
@@ -83,6 +80,7 @@ class AuthRepos {
         email: email,
         password: password,
       );
+      await credential.user?.updateDisplayName(username);
       return getAppUser(credential.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -104,12 +102,50 @@ class AuthRepos {
     if (user != null) {
       var appUser = AppUser(
           uid: user.uid,
-          username: (user.email ?? '').split('@')[0],
+          username: (user.displayName ?? user.email ?? '').split('@')[0],
           email: user.email ?? '',
           photoURL: user.photoURL ?? '');
+      var providerProfile = user.providerData[0];
+      appUser.username = providerProfile.displayName ?? appUser.username;
+      appUser.email = providerProfile.email ?? appUser.email;
+      appUser.photoURL = providerProfile.photoURL ?? appUser.photoURL;
       return appUser;
     } else {
       return null;
+    }
+  }
+
+  Future updateUsername(String username) async {
+    var user = _auth.currentUser;
+    if (user == null) {
+      return Future.error('Sign in again.');
+    }
+    return user.updateDisplayName(username);
+    /*try {
+      var result = await user.reauthenticateWithCredential(
+          EmailAuthProvider.credential(email: user.email!, password: password));
+      if (result.user != null) {
+        await result.user!.updateDisplayName(username);
+      }
+    } catch (e) {
+      return Future.error(e.toString());
+    }*/
+  }
+
+  Future updatePassword(String oldPassword, String newPassword) async {
+    var user = _auth.currentUser;
+    if (user == null) {
+      return Future.error('Sign in again.');
+    }
+    try {
+      var result = await user.reauthenticateWithCredential(
+          EmailAuthProvider.credential(
+              email: user.email!, password: oldPassword));
+      if (result.user != null) {
+        await result.user!.updatePassword(newPassword);
+      }
+    } catch (e) {
+      return Future.error(e.toString());
     }
   }
 

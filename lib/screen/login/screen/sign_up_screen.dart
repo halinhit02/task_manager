@@ -38,11 +38,11 @@ class __BodyState extends State<_Body> {
 
   void _singUp() {
     DialogHelper.showLoadingDialog(context);
-    AuthRepos().signUp(userName, email, password).then((value) {
+    AuthRepos.instance.signUp(userName, email, password).then((value) {
       if (value != null) {
         DatabaseRepo.instance.setUserInfo(value).then((value) {
           Navigator.pop(context);
-          DialogHelper.showSnackBar(context, 'Tài khoản đã được tạo.');
+          DialogHelper.showSnackBar(context, 'Your account is created.');
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (_) => const HomeScreen()));
         }).catchError((e) {
@@ -61,13 +61,13 @@ class __BodyState extends State<_Body> {
       checkEmailAddress = state.checkEmailAddress;
     }
     if (state is ValidateUserNameState) {
-      errorUserName = 'Không để trống trường này';
+      errorUserName = 'This field is not empty';
     }
     if (state is ValidateEmailState) {
-      errorEmail = 'Không để trống trường này';
+      errorEmail = 'This field is not empty';
     }
     if (state is ValidatePasswordState) {
-      errorPassword = 'Không để trống trường này';
+      errorPassword = 'This field is not empty';
     }
     if (state.showDialogConfirm) {
       _singUp();

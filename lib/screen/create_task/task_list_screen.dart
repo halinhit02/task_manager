@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:thuc_tap_chuyen_nganh/model/task.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/create_task/widget/create_task_sheet.dart';
-import 'package:thuc_tap_chuyen_nganh/screen/create_task/widget/item_task.dart';
+import 'package:task_manager/model/task.dart';
+import 'package:task_manager/repository/database_repos.dart';
+import 'package:task_manager/screen/create_task/widget/create_task_sheet.dart';
+import 'package:task_manager/screen/create_task/widget/item_task.dart';
 
 class CreateTaskScreen extends StatefulWidget {
   const CreateTaskScreen({Key? key}) : super(key: key);
@@ -58,16 +58,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                         ),
                         child: Column(
                           children: [
-                            Container(
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                color: Colors.teal,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                ),
-                              ),
-                            ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 20),

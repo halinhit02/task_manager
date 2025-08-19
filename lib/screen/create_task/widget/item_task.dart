@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/src/dropdown_button2.dart';
 import 'package:intl/intl.dart';
-import 'package:thuc_tap_chuyen_nganh/model/task.dart';
-import 'package:thuc_tap_chuyen_nganh/model/task_type.dart';
+import 'package:task_manager/model/task.dart';
+import 'package:task_manager/model/task_type.dart';
 
 import '../../../../helper/dialog_helper.dart';
 import 'create_task_sheet.dart';

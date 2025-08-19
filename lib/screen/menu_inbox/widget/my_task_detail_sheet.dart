@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/date_time_helper.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
-import 'package:thuc_tap_chuyen_nganh/model/comment.dart';
-import 'package:thuc_tap_chuyen_nganh/model/task.dart';
-import 'package:thuc_tap_chuyen_nganh/repository/database_repos.dart';
-
-import 'dialog_widget.dart';
+import 'package:task_manager/helper/date_time_helper.dart';
+import 'package:task_manager/helper/dialog_helper.dart';
+import 'package:task_manager/model/comment.dart';
+import 'package:task_manager/model/task.dart';
+import 'package:task_manager/repository/database_repos.dart';
 
 class MyTaskDetailSheet extends StatefulWidget {
   const MyTaskDetailSheet({Key? key, required this.task}) : super(key: key);
@@ -168,27 +166,24 @@ class _MyTaskDetailSheetState extends State<MyTaskDetailSheet> {
           const Divider(
             thickness: 1,
           ),
-          TextField(
-            autofocus: true,
-            focusNode: focusNode,
-            controller: commentTextController,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 15),
-              hintText: 'Enter your comment...',
-              border: OutlineInputBorder(borderSide: BorderSide.none),
-            ),
-            onSubmitted: (value) {},
-          ),
           Row(
             children: [
-              IconButton(
-                  onPressed: () {
-                    _showDialogTimeWorkDetail();
-                  },
-                  icon: const Icon(
-                    Icons.link,
-                  )),
-              const Expanded(child: SizedBox()),
+              Expanded(
+                child: TextField(
+                  autofocus: true,
+                  focusNode: focusNode,
+                  textInputAction: TextInputAction.newline,
+                  controller: commentTextController,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    hintText: 'Enter your comment...',
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                  ),
+                  maxLines: 5,
+                  minLines: 1,
+                  onSubmitted: (value) {},
+                ),
+              ),
               IconButton(
                   onPressed: () async {
                     if (commentTextController.text.isEmpty) {
@@ -297,11 +292,4 @@ class _MyTaskDetailSheetState extends State<MyTaskDetailSheet> {
     );
   }
 
-  void _showDialogTimeWorkDetail() async {
-    final response = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return const DialogWidget();
-        });
-  }
 }

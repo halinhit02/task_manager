@@ -1,4 +1,4 @@
-import 'package:thuc_tap_chuyen_nganh/model/task_type.dart';
+import 'package:task_manager/model/task_type.dart';
 
 class Task {
   String id; // id = DateTime.now().millisecondsSinceEpoch
@@ -18,13 +18,7 @@ class Task {
         id: map['id'] ?? '',
         title: map['title'] ?? '',
         description: map['description'] ?? '',
-        type: map['type'] == 0
-            ? TaskType.Waiting
-            : map['type'] == 1
-                ? TaskType.Running
-                : map['type'] == 2
-                    ? TaskType.Finished
-                    : TaskType.Finished,
+        type: TaskType.values[map['type'] ?? 0],
         time: map['time'] ?? 0,
       );
 

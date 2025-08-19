@@ -1,8 +1,8 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:thuc_tap_chuyen_nganh/helper/dialog_helper.dart';
-import 'package:thuc_tap_chuyen_nganh/model/task_type.dart';
+import 'package:task_manager/helper/dialog_helper.dart';
+import 'package:task_manager/model/task_type.dart';
 
 import '../../../../model/task.dart';
 import '../../../../repository/database_repos.dart';
@@ -129,6 +129,7 @@ class _CreateTaskSheetState extends State<CreateTaskSheet> {
                   selectedValue = value;
                   task.type = value;
                 }
+                print(value);
                 setState(() {
                 });
               },
