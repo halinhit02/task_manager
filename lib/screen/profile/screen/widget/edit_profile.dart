@@ -4,7 +4,6 @@ import 'package:task_manager/repository/database_repos.dart';
 import 'package:task_manager/screen/profile/screen/widget/change_password_dialog.dart';
 
 import '../../../../model/app_user.dart';
-import '../../../../repository/auth_repos.dart';
 
 class MyEditProfile extends StatefulWidget {
   const MyEditProfile({Key? key}) : super(key: key);

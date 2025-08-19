@@ -7,8 +7,6 @@ import 'package:task_manager/model/comment.dart';
 import 'package:task_manager/model/task.dart';
 import 'package:task_manager/repository/database_repos.dart';
 
-import 'dialog_widget.dart';
-
 class MyTaskDetailSheet extends StatefulWidget {
   const MyTaskDetailSheet({Key? key, required this.task}) : super(key: key);
 
@@ -294,11 +292,4 @@ class _MyTaskDetailSheetState extends State<MyTaskDetailSheet> {
     );
   }
 
-  void _showDialogTimeWorkDetail() async {
-    final response = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return const DialogWidget();
-        });
-  }
 }

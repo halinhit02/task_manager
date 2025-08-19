@@ -9,14 +9,9 @@ class DialogWidget extends StatefulWidget {
 }
 
 class _DialogWidgetState extends State<DialogWidget> {
-  PickedFile? _imagefile;
-  final ImagePicker _picker = ImagePicker();
 
   Future getImage(ImageSource Source) async {
-    final PickedFile = await _picker.getImage(source: Source);
-    // final  imagetamp = File(image.path);
     setState(() {
-      _imagefile = PickedFile;
     });
   }
 

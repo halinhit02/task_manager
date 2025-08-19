@@ -1,15 +1,10 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:task_manager/model/task.dart';
 import 'package:task_manager/model/task_type.dart';
 import 'package:task_manager/repository/database_repos.dart';
 
-import '../../../../helper/dialog_helper.dart';
 import '../../../../model/app_user.dart';
-import 'my_chart.dart';
 
 class MyProductivity extends StatefulWidget {
   const MyProductivity({Key? key}) : super(key: key);
@@ -212,10 +207,11 @@ class _MyProductivityState extends State<MyProductivity> {
                                 );
                               }
                               int finishTaskCount = snapshot.data
-                                  ?.where((element) =>
-                                      element.type == TaskType.Finished ||
-                                      element.type == TaskType.Canceled)
-                                  .length ?? 0;
+                                      ?.where((element) =>
+                                          element.type == TaskType.Finished ||
+                                          element.type == TaskType.Canceled)
+                                      .length ??
+                                  0;
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -268,26 +264,6 @@ class _MyProductivityState extends State<MyProductivity> {
                                   ),
                                   const SizedBox(
                                     height: 10,
-                                  ),
-                                  SizedBox(
-                                    height: 300,
-                                    child: MyChart(
-                                      chartDatas: [
-                                        ChartData('Feb', 17, 0, 0, 0),
-                                        ChartData('Mar', 38, 0, 0, 0),
-                                        ChartData('Apr', 37, 0, 0, 0),
-                                        ChartData('May', 35, 0, 0, 0),
-                                        ChartData(
-                                            'Jun',
-                                            snapshot.data!.isNotEmpty ? (finishTaskCount /
-                                                    snapshot.data!.length *
-                                                    100)
-                                                .round() : 0,
-                                            0,
-                                            0,
-                                            0)
-                                      ],
-                                    ),
                                   ),
                                 ],
                               );

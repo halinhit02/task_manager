@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '404910094346',
     projectId: 'taskmanager-9e2b9',
     databaseURL: 'https://taskmanager-9e2b9-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'taskmanager-9e2b9.appspot.com',
+    storageBucket: 'taskmanager-9e2b9.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -64,9 +64,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '404910094346',
     projectId: 'taskmanager-9e2b9',
     databaseURL: 'https://taskmanager-9e2b9-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'taskmanager-9e2b9.appspot.com',
+    storageBucket: 'taskmanager-9e2b9.firebasestorage.app',
     androidClientId: '404910094346-1ns6phkcah0benukc2l9hupvkcaj51bu.apps.googleusercontent.com',
     iosClientId: '404910094346-ua12fptab857br2smalic2k5fbougp2c.apps.googleusercontent.com',
     iosBundleId: 'com.halinhit.taskManager',
   );
+
 }

@@ -11,12 +11,7 @@ class AuthRepos {
 
   static final instance = AuthRepos._();
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
-  );
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
   Future<bool> isAuthenticated() async {
     return _auth.currentUser != null;
@@ -29,12 +24,16 @@ class AuthRepos {
 
   Future<AppUser?> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleAccount = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication? googleAuthentication =
-          await googleAccount?.authentication;
+      if (!GoogleSignIn.instance.supportsAuthenticate()) {
+        return null;
+      }
+      final GoogleSignInAccount googleAccount =
+          await GoogleSignIn.instance.authenticate();
+
+      final GoogleSignInAuthentication googleAuthentication =
+          googleAccount.authentication;
       final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuthentication?.accessToken,
-        idToken: googleAuthentication?.idToken,
+        idToken: googleAuthentication.idToken,
       );
       var userCredential = await _auth.signInWithCredential(credential);
       return getAppUser(userCredential.user);
